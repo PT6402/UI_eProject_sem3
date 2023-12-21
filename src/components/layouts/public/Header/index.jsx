@@ -7,7 +7,7 @@ import { DrawerModal } from "components/common";
 import Nav from "./Nav";
 import NavDrawerContent from "./NavDrawerContent";
 
-const Header = ({ openLoginModal }) => {
+const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSideNav = () => {
@@ -29,7 +29,7 @@ const Header = ({ openLoginModal }) => {
       <DrawerModal motionKey="nav-drawer" close={() => setIsOpen(false)}>
         {isOpen && <NavDrawerContent toggleSideNav={toggleSideNav} />}
       </DrawerModal>
-      <Nav toggleSideNav={toggleSideNav} openLoginModal={openLoginModal} />
+      <Nav toggleSideNav={toggleSideNav} />
     </header>
   );
 };

@@ -7,6 +7,7 @@ export { default as Loader } from "./public/Loader";
 export { default as Toast } from "./public/Toast";
 export { default as ToastMessage } from "./public/ToastMessage";
 export { default as DrawerModal } from "./public/DrawerModal";
+export { default as Slider } from "./public/Slider";
 
 //[COMMON_PRIVATE]
 export { default as UIAvatar } from "./private/UIAvatar";

@@ -6,12 +6,14 @@ import styles from "./index.module.scss";
 import { RiMenuLine } from "react-icons/ri";
 import { CgSearch } from "react-icons/cg";
 import { Button } from "components/common";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UIDropdown from "../../../../common/public/UIDropdown";
-export default function Navbar({ toggleSideNav, openLoginModal }) {
+import { setStatus, setType } from "../../../../../context/modalSlice";
+import SignIn from "../../../../pages/public/Sign_in";
+import Sign_up from "../../../../pages/public/Sign_up";
+export default function Navbar({ toggleSideNav }) {
   const info_user = useSelector((state) => state.user.info_user);
-
-  const { pathname } = useLocation();
+  const dispatch = useDispatch();
   const [hasScrolled, setHasSrolled] = useState(false);
   const resizeHeaderOnScroll = () => {
     setHasSrolled((hasScrolled) => {
@@ -41,8 +43,14 @@ export default function Navbar({ toggleSideNav, openLoginModal }) {
     return () => window.removeEventListener("scroll", resizeHeaderOnScroll);
   }, []);
 
-  const handleOpenLoginModal = () => {
-    openLoginModal();
+  const handleOpenLoginModal = (type) => {
+    if (type == "sign-up") {
+      dispatch(setStatus(true));
+      dispatch(setType(Sign_up));
+    } else {
+      dispatch(setStatus(true));
+      dispatch(setType(SignIn));
+    }
   };
   const navStyles = hasScrolled
     ? `${styles.nav} ${styles.hasScrolled}`
@@ -54,12 +62,12 @@ export default function Navbar({ toggleSideNav, openLoginModal }) {
           <>
             <Button
               className={`${styles.button_outline}`}
-              onClick={handleOpenLoginModal}>
+              onClick={() => handleOpenLoginModal("login")}>
               Login
             </Button>
             <Button
               className={`${styles.button_full}`}
-              onClick={handleOpenLoginModal}>
+              onClick={() => handleOpenLoginModal("sign-up")}>
               Sign Up
             </Button>
           </>

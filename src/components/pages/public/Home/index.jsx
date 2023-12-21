@@ -1,4 +1,9 @@
-import styles from "./index.module.scss";
+import BannerSlider from "./BannerSlider";
+
 export default function Home() {
-  return <div className={styles.container}>Home</div>;
+  return (
+    <div>
+      <BannerSlider />
+    </div>
+  );
 }

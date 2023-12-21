@@ -1,13 +1,13 @@
 import { forwardRef } from "react";
 import PropTypes from "prop-types";
 
-// Custom styles for SoftInput
+// Custom styles for UIInput
 import UIInputRoot from "components/common/private/UIInput/UIInputRoot";
 import UIInputWithIconRoot from "components/common/private/UIInput/UIInputWithIconRoot";
 import UIInputIconBoxRoot from "components/common/private/UIInput/UIInputIconBoxRoot";
 import UIInputIconRoot from "components/common/private/UIInput/UIInputIconRoot";
 
-const SoftInput = forwardRef(
+const UIInput = forwardRef(
   ({ size, icon, error, success, disabled, ...rest }, ref) => {
     let template;
     const iconDirection = icon.direction;
@@ -71,7 +71,7 @@ const SoftInput = forwardRef(
 );
 
 // Setting default values for the props of SoftInput
-SoftInput.defaultProps = {
+UIInput.defaultProps = {
   size: "medium",
   icon: {
     component: false,
@@ -82,8 +82,8 @@ SoftInput.defaultProps = {
   disabled: false,
 };
 
-// Typechecking props for the SoftInput
-SoftInput.propTypes = {
+// Typechecking props for the UIInput
+UIInput.propTypes = {
   size: PropTypes.oneOf(["small", "medium", "large"]),
   icon: PropTypes.shape({
     component: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
@@ -93,5 +93,5 @@ SoftInput.propTypes = {
   success: PropTypes.bool,
   disabled: PropTypes.bool,
 };
-SoftInput.displayName = "SoftInput";
-export default SoftInput;
+UIInput.displayName = "UIInput";
+export default UIInput;
