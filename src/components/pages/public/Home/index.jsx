@@ -1,9 +1,11 @@
-import BannerSlider from "./BannerSlider";
+import SlideshowSection from "./BannerSlider";
+import ServiceSlider from "./ServiceSlider";
 
 export default function Home() {
   return (
     <div>
-      <BannerSlider />
+      <SlideshowSection />
+      <ServiceSlider />
     </div>
   );
 }
