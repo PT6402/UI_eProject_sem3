@@ -5,6 +5,7 @@ const modalSlice = createSlice({
   initialState: {
     status: false,
     type: null,
+    value: null,
   },
   reducers: {
     setStatus: (state, action) => {
@@ -13,8 +14,11 @@ const modalSlice = createSlice({
     setType: (state, action) => {
       state.type = action.payload;
     },
+    setValue: (state, action) => {
+      state.value = action.payload;
+    },
   },
 });
 
-export const { setType, setStatus } = modalSlice.actions;
+export const { setType, setStatus, setValue } = modalSlice.actions;
 export default modalSlice.reducer;

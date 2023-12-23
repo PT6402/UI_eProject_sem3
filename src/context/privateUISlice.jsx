@@ -4,7 +4,7 @@ const privateUISlice = createSlice({
   name: "privateUI",
   initialState: {
     miniSidenav: true,
-    transparentSidenav: true,
+    transparentSidenav: false,
     transparentNavbar: false,
     fixedNavbar: true,
     layout: "dashboard",

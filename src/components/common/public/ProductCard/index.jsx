@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect, useRef } from "react";
 import styles from "./index.module.scss";
 import Item from "./Item";
 
-const ProductCard = () => {
+const ProductCard = ({ name }) => {
   const [isSmallContainer, setIsSmallContainer] = useState(false);
   const containerRef = useRef(null);
   useEffect(() => {
@@ -35,7 +36,7 @@ const ProductCard = () => {
               className={`${styles.media_container} ${styles.image_container}`}>
               <div className={`${styles.media_fill} ${styles.image_fill}`}>
                 <div>
-                  <Item />
+                  <Item name={name} />
                 </div>
               </div>
             </div>

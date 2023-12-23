@@ -5,7 +5,7 @@ export default function ProtectedRoutes({ needAuth, needStaff }) {
   const { pathname } = useLocation();
 
   //value context
-  const isStaff = "employee";
+  const isStaff = "admin";
   const isVerified = true;
 
   //check user login

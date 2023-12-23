@@ -4,7 +4,7 @@ import { useLocation, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import Link from "@mui/material/Link";
+
 import Icon from "@mui/material/Icon";
 import { UIBox, UITypography } from "components/common";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,7 @@ import SidenavList from "./SidenavList";
 import SidenavItem from "./SidenavItem";
 import SidenavRoot from "./SidenavRoot";
 import sidenavLogoLabel from "./styles/sidenav";
+import { Link } from "react-router-dom/dist";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const location = useLocation();
@@ -25,7 +26,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [openCollapse, setOpenCollapse] = useState(false);
   const [openNestedCollapse, setOpenNestedCollapse] = useState(false);
   const collapseName = pathname.split("/").slice(1)[0];
-  const itemName = pathname.split("/").slice(1)[1];
+  const collapseName1 = pathname.split("/").slice(2)[0];
+  const itemName = pathname.split("/").slice(2)[1];
 
   const closeSidenav = () => dispatch(setMiniSidenav(true));
 
@@ -39,33 +41,35 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     return () => window.removeEventListener("resize", handleMiniSidenav);
   }, [dispatch, location]);
 
+  // Render all the nested collapse items from the routes.js
   const renderNestedCollapse = (collapse) => {
-    const template = collapse.map(({ name, route, key, href }) =>
-      href ? (
-        <Link
-          key={key}
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          sx={{ textDecoration: "none" }}>
-          <SidenavItem name={name} nested />
-        </Link>
-      ) : (
-        <NavLink to={route} key={key} sx={{ textDecoration: "none" }}>
-          <SidenavItem name={name} active={route === pathname} nested />
-        </NavLink>
-      )
-    );
+    const template = collapse.map(({ name, route, key, isShow }) => {
+      if (isShow) {
+        return (
+          <NavLink to={route} key={key} sx={{ textDecoration: "none" }}>
+            <SidenavItem name={name} active={route === pathname} nested />
+          </NavLink>
+        );
+      }
+    });
 
     return template;
   };
-
+  console.log(itemName);
   // Render the all the collpases from the routes.js
   const renderCollapse = (collapses) =>
-    collapses.map(({ name, collapse, route, href, key }) => {
+    collapses.map(({ name, collapse, route, key, link, component }) => {
       let returnValue;
-
-      if (collapse) {
+      if (link && route && component) {
+        returnValue = (
+          <NavLink to={route} key={key} sx={{ textDecoration: "none" }}>
+            <SidenavItem
+              key={key}
+              name={name}
+              active={key === itemName}></SidenavItem>
+          </NavLink>
+        );
+      } else if (collapse) {
         returnValue = (
           <SidenavItem
             key={key}
@@ -81,16 +85,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           </SidenavItem>
         );
       } else {
-        returnValue = href ? (
-          <Link
-            href={href}
-            key={key}
-            target="_blank"
-            rel="noreferrer"
-            sx={{ textDecoration: "none" }}>
-            <SidenavItem name={name} active={key === itemName} />
-          </Link>
-        ) : (
+        returnValue = (
           <NavLink to={route} key={key} sx={{ textDecoration: "none" }}>
             <SidenavItem name={name} active={key === itemName} />
           </NavLink>
@@ -98,49 +93,46 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
       }
       return <SidenavList key={key}>{returnValue}</SidenavList>;
     });
-
+  console.log(collapseName1);
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes = routes.map(
-    ({ type, name, icon, title, collapse, noCollapse, key, href, route }) => {
+    ({ type, name, icon, title, collapse, noCollapse, key, index, route }) => {
       let returnValue;
 
       if (type === "collapse") {
-        if (href) {
-          returnValue = (
-            <Link
-              href={href}
-              key={key}
-              target="_blank"
-              rel="noreferrer"
-              sx={{ textDecoration: "none" }}>
-              <SidenavCollapse
-                name={name}
-                icon={icon}
-                active={key === collapseName}
-                noCollapse={noCollapse}
-              />
-            </Link>
-          );
-        } else if (noCollapse && route) {
-          returnValue = (
-            <NavLink to={route} key={key}>
-              <SidenavCollapse
-                name={name}
-                icon={icon}
-                noCollapse={noCollapse}
-                active={key === collapseName}>
-                {collapse ? renderCollapse(collapse) : null}
-              </SidenavCollapse>
-            </NavLink>
-          );
+        if (noCollapse && route) {
+          if (index) {
+            returnValue = (
+              <NavLink to={route} key={key}>
+                <SidenavCollapse
+                  name={name}
+                  icon={icon}
+                  noCollapse={noCollapse}
+                  active={pathname.split("/").length == 2}>
+                  {collapse ? renderCollapse(collapse) : null}
+                </SidenavCollapse>
+              </NavLink>
+            );
+          } else {
+            returnValue = (
+              <NavLink to={route} key={key}>
+                <SidenavCollapse
+                  name={name}
+                  icon={icon}
+                  noCollapse={noCollapse}
+                  active={key === collapseName1}>
+                  {collapse ? renderCollapse(collapse) : null}
+                </SidenavCollapse>
+              </NavLink>
+            );
+          }
         } else {
           returnValue = (
             <SidenavCollapse
               key={key}
               name={name}
               icon={icon}
-              noCollapse={noCollapse}
-              active={key === collapseName}
+              active={key === collapseName1}
               open={openCollapse === key}
               onClick={() =>
                 openCollapse === key

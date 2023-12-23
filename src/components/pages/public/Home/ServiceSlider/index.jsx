@@ -2,17 +2,16 @@ import { ProductSlider } from "components/common";
 
 import styles from "./index.module.scss";
 import { Navigation } from "swiper";
+import data from "./data";
 Navigation;
 const ServiceSlider = () => {
-  const slides = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
-
   return (
     <section className={styles.section}>
       <div className={`${styles.container} main-container`}>
         <h1 className={styles.section_title_bottom}>services</h1>
         <div className={styles.carousel_container}>
           <ProductSlider
-            slides={slides}
+            slides={data}
             slidesPerView="auto"
             spaceBetween={20}
             navigation={{

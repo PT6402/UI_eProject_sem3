@@ -55,7 +55,7 @@ const ProductSlider = ({
         )}
         {slides.map((slide) => (
           <SwiperSlide key={slide.id} className={slideClassName}>
-            <ProductCard />
+            <ProductCard name={slide.name} />
           </SwiperSlide>
         ))}
       </Swiper>

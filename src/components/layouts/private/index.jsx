@@ -12,6 +12,7 @@ import Sidenav from "./SideNav";
 import Footer from "./Footer";
 import DashboardLayout from "./DashboardLayout";
 import DashboardNavbar from "./DashboardNavbar";
+import ModalType from "./Modal";
 export default function PrivateLayout({ routes }) {
   const dispatch = useDispatch();
   const privateUI = useSelector((state) => state.privateUI);
@@ -38,22 +39,25 @@ export default function PrivateLayout({ routes }) {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
   return (
-    <ThemeProvider theme={PrivateTheme}>
-      <CssBaseline />
-      <Sidenav
-        routes={routes}
-        onMouseEnter={handleOnMouseEnter}
-        onMouseLeave={handleOnMouseLeave}
-      />
-      <DashboardLayout>
-        <DashboardNavbar />
-        <UIBox py={3}>
-          <Grid container>
-            <Outlet />
-          </Grid>
-        </UIBox>
-        <Footer />
-      </DashboardLayout>
-    </ThemeProvider>
+    <>
+      <ModalType />
+      <ThemeProvider theme={PrivateTheme}>
+        <CssBaseline />
+        <Sidenav
+          routes={routes}
+          onMouseEnter={handleOnMouseEnter}
+          onMouseLeave={handleOnMouseLeave}
+        />
+        <DashboardLayout>
+          <DashboardNavbar />
+          <UIBox py={3}>
+            <Grid container>
+              <Outlet />
+            </Grid>
+          </UIBox>
+          {/* <Footer /> */}
+        </DashboardLayout>
+      </ThemeProvider>
+    </>
   );
 }

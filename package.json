@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "vite --host",
+    "build": "vite build ",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -50,6 +50,7 @@
     "react-slider": "^2.0.6",
     "react-table": "^7.8.0",
     "redux": "^5.0.0",
+    "regenerator-runtime": "^0.14.1",
     "sass": "^1.69.5",
     "swiper": "^8.4.6",
     "three": "^0.159.0",

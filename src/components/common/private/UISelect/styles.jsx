@@ -166,7 +166,7 @@ const styles = (selectSize, selectError, selectSuccess) => {
       opacity: state.isDisabled ? 0.5 : 1,
       userSelect: state.isDisabled ? "none" : "auto",
       transition: "background-color 300ms ease, color 300ms ease",
-
+      zIndex: "99999999999 !important",
       "&:after": {
         content: "'Press to select'",
         display: "block",

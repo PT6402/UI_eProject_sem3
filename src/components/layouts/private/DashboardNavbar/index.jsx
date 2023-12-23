@@ -5,10 +5,10 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
 import { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { UIBox, UITypography } from "components/common";
-import { Breadcrumbs, NotificationItem } from "components/models";
+import { NotificationItem } from "components/models";
 import {
   navbar,
   navbarContainer,
@@ -29,7 +29,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { fixedNavbar, miniSidenav, transparentNavbar } = privateUI;
   const [openMenu, setOpenMenu] = useState(false);
   const [navbarType, setNavbarType] = useState();
-  const route = useLocation().pathname.split("/").slice(1);
 
   const handleMiniSidenav = () =>
     setMiniSidenav(dispatch(setMiniSidenav(!miniSidenav)));
@@ -115,12 +114,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
           color="inherit"
           mb={{ xs: 1, md: 0 }}
           sx={(theme) => navbarRow(theme, { isMini })}>
-          <Breadcrumbs
-            icon="home"
-            title={route[route.length - 1]}
-            route={route}
-            light={light}
-          />
           <Icon
             fontSize="medium"
             sx={navbarDesktopMenu}

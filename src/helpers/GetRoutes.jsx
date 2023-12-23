@@ -3,6 +3,29 @@ import ProtectedRoutes from "../routes/protected.routes";
 
 const getRoutes = (allRoutes) =>
   allRoutes.map((route) => {
+    if (route.link && route.component && route.route) {
+      return (
+        <>
+          <Route
+            exact
+            path={route.route}
+            element={route.component}
+            key={route.key}></Route>
+          {getRoutes(route.collapse)}
+        </>
+      );
+    }
+
+    if (route.noCollapse) {
+      return (
+        <Route
+          exact
+          path={route.route}
+          element={route.component}
+          key={route.key}
+        />
+      );
+    }
     if (route.auth) {
       const authRoute = (
         <Route element={<ProtectedRoutes needAuth={true} />} key={route.key}>

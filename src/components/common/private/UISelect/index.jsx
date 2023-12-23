@@ -14,6 +14,7 @@ const UISelect = forwardRef(({ size, error, success, ...rest }, ref) => {
   return (
     <Select
       {...rest}
+      style={{ zIndex: "99999999 !importan" }}
       ref={ref}
       styles={styles(size, error, success)}
       theme={(theme) => ({
