@@ -8,26 +8,28 @@ import colors from "assets/themes/private/base/colors";
 // Custom styles for SoftSelect
 import styles from "./styles";
 
-const UISelect = forwardRef(({ size, error, success, ...rest }, ref) => {
-  const { light } = colors;
+const UISelect = forwardRef(
+  ({ size, error, success, custom, ...rest }, ref) => {
+    const { light } = colors;
 
-  return (
-    <Select
-      {...rest}
-      style={{ zIndex: "99999999 !importan" }}
-      ref={ref}
-      styles={styles(size, error, success)}
-      theme={(theme) => ({
-        ...theme,
-        colors: {
-          ...theme.colors,
-          primary25: light.main,
-          primary: light.main,
-        },
-      })}
-    />
-  );
-});
+    return (
+      <Select
+        {...rest}
+        style={{ zIndex: "99999999 !importan" }}
+        ref={ref}
+        styles={styles(size, error, success, custom)}
+        theme={(theme) => ({
+          ...theme,
+          colors: {
+            ...theme.colors,
+            primary25: light.main,
+            primary: light.main,
+          },
+        })}
+      />
+    );
+  }
+);
 
 // Setting default values for the props of SoftSelect
 UISelect.defaultProps = {

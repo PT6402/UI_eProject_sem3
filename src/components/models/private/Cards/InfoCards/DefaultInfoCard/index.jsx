@@ -5,16 +5,15 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
+import { UIBox, UITypography } from "../../../../../common";
 
 // Soft UI Dashboard PRO React components
-import SoftBox from "components/common/SoftBox";
-import SoftTypography from "components/common/SoftTypography";
 
 function DefaultInfoCard({ color, icon, title, description, value }) {
   return (
     <Card>
-      <SoftBox p={2} mx={3} display="flex" justifyContent="center">
-        <SoftBox
+      <UIBox p={2} mx={3} display="flex" justifyContent="center">
+        <UIBox
           display="grid"
           justifyContent="center"
           alignItems="center"
@@ -26,27 +25,27 @@ function DefaultInfoCard({ color, icon, title, description, value }) {
           borderRadius="lg"
           variant="gradient">
           <Icon fontSize="default">{icon}</Icon>
-        </SoftBox>
-      </SoftBox>
-      <SoftBox pb={2} px={2} textAlign="center" lineHeight={1.25}>
-        <SoftTypography
+        </UIBox>
+      </UIBox>
+      <UIBox pb={2} px={2} textAlign="center" lineHeight={1.25}>
+        <UITypography
           variant="h6"
           fontWeight="medium"
           textTransform="capitalize">
           {title}
-        </SoftTypography>
+        </UITypography>
         {description && (
-          <SoftTypography variant="caption" color="text" fontWeight="regular">
+          <UITypography variant="caption" color="text" fontWeight="regular">
             {description}
-          </SoftTypography>
+          </UITypography>
         )}
         {description && !value ? null : <Divider />}
         {value && (
-          <SoftTypography variant="h5" fontWeight="medium">
+          <UITypography variant="h5" fontWeight="medium">
             {value}
-          </SoftTypography>
+          </UITypography>
         )}
-      </SoftBox>
+      </UIBox>
     </Card>
   );
 }

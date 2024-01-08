@@ -55,7 +55,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
     return template;
   };
-  console.log(itemName);
   // Render the all the collpases from the routes.js
   const renderCollapse = (collapses) =>
     collapses.map(({ name, collapse, route, key, link, component }) => {
@@ -93,7 +92,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
       }
       return <SidenavList key={key}>{returnValue}</SidenavList>;
     });
-  console.log(collapseName1);
+
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes = routes.map(
     ({ type, name, icon, title, collapse, noCollapse, key, index, route }) => {

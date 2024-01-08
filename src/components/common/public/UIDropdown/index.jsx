@@ -7,7 +7,6 @@ import FrameUI from "../../../../helpers/FrameUI";
 import SpaceShip from "../../../models/private/Icons/SpaceShip";
 import Cube from "../../../models/private/Icons/Cube";
 import Document from "../../../models/private/Icons/Document";
-import Shop from "../../../models/private/Icons/Shop";
 
 export default function UIDropdown({ name, fontSize }) {
   const routes = [
@@ -16,32 +15,22 @@ export default function UIDropdown({ name, fontSize }) {
       key: "docs",
       collapse: [
         {
-          name: "Getting Started",
-          key: "getting-started",
-          href: "https://www.creative-tim.com/learning-lab/react/quick-start/soft-ui-dashboard/",
-          description: "All about overview, quick start, license and contents",
+          name: "Searching Store",
+          key: "searching-store",
+          href: "/searching-store",
           icon: <SpaceShip size="15px" color="secondary" />,
         },
         {
-          name: "Foundation",
-          key: "foundation",
-          href: "https://www.creative-tim.com/learning-lab/react/colors/soft-ui-dashboard/",
-          description: "See our colors, icons and typography",
+          name: "Checking invoice",
+          key: "checking-invoice",
+          href: "/checking-invoice",
           icon: <Document size="15px" color="secondary" />,
         },
         {
-          name: "Components",
-          key: "components",
-          href: "https://www.creative-tim.com/learning-lab/react/alerts/soft-ui-dashboard/",
-          description: "Explore our collection of fully designed components",
+          name: "Online Payment",
+          key: "online-payment",
+          href: "/online-payment",
           icon: <Cube size="15px" color="secondary" />,
-        },
-        {
-          name: "Plugins",
-          key: "plugins",
-          href: "https://www.creative-tim.com/learning-lab/react/datepicker/soft-ui-dashboard/",
-          description: "Check how you can integrate our plugins",
-          icon: <Shop size="15px" color="secondary" />,
         },
       ],
     },

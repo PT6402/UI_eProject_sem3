@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { forwardRef } from "react";
 import PropTypes from "prop-types";
 import UIBadgeRoot from "components/common/private/UIBadge/UIBadgeRoot";
@@ -13,6 +14,7 @@ const UIBadge = forwardRef(
       border,
       container,
       children,
+      paddingCus,
       ...rest
     },
     ref
@@ -28,6 +30,7 @@ const UIBadge = forwardRef(
         border,
         container,
         children,
+        paddingCus,
       }}
       ref={ref}
       color="default">

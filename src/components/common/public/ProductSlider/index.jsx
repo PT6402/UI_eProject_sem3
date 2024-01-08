@@ -29,6 +29,7 @@ const ProductSlider = ({
   return (
     <>
       <Swiper
+        centerInsufficientSlides
         breakpoints={bp ? bp : undefined}
         slidesPerView={slidesPerView}
         spaceBetween={spaceBetween}
@@ -55,7 +56,11 @@ const ProductSlider = ({
         )}
         {slides.map((slide) => (
           <SwiperSlide key={slide.id} className={slideClassName}>
-            <ProductCard name={slide.name} />
+            <ProductCard
+              name={slide.name}
+              description={slide.description}
+              id={slide.id}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

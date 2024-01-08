@@ -1,32 +1,34 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-
-function GetAddressApi() {
-  const url = "https://provinces.open-api.vn/api/";
-  const [addresses, setAddress] = useState();
-  useEffect(() => {
-    const handleGetAddress = () => {
-      axios.get(url).then((res) => {
-        setAddress(res.data);
-      });
-    };
-    handleGetAddress();
-  }, []);
-  return addresses;
-}
+const url = "https://provinces.open-api.vn/api/";
 async function GetProvices() {
-  const url = "https://provinces.open-api.vn/api/p";
-  const res = await axios.get(url);
+  const res = await axios.get(`${url}p`);
   return res;
 }
 async function GetDistrict(code) {
-  const url = `https://provinces.open-api.vn/api/p/${code}?depth=2`;
-  const res = await axios.get(url);
+  const res = await axios.get(`${url}p/${code}?depth=2`);
   return res;
 }
 async function GetWard(code) {
-  const url = `https://provinces.open-api.vn/api/d/${code}?depth=2`;
-  const res = await axios.get(url);
+  const res = await axios.get(`${url}d/${code}?depth=2`);
   return res;
 }
-export { GetAddressApi, GetProvices, GetDistrict, GetWard };
+async function GetProviceByCode(code) {
+  const res = await axios.get(`${url}p/${code}`);
+  return res;
+}
+async function GetDistrictByCode(code) {
+  const res = await axios.get(`${url}d/${code}`);
+  return res;
+}
+async function GetWardByCode(code) {
+  const res = await axios.get(`${url}w/${code}`);
+  return res;
+}
+export {
+  GetProvices,
+  GetDistrict,
+  GetWard,
+  GetDistrictByCode,
+  GetProviceByCode,
+  GetWardByCode,
+};

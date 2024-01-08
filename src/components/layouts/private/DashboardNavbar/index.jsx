@@ -22,6 +22,7 @@ import { setMiniSidenav, setTransparentNavbar } from "context/privateUISlice";
 // Images
 import team2 from "assets/images/private/team-2.jpg";
 import logoSpotify from "assets/images/private/small-logos/logo-spotify.svg";
+import { useAuth } from "../../../../hooks/useAuth";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { fixedNavbar, miniSidenav, transparentNavbar } = privateUI;
   const [openMenu, setOpenMenu] = useState(false);
   const [navbarType, setNavbarType] = useState();
-
+  const { logout } = useAuth();
   const handleMiniSidenav = () =>
     setMiniSidenav(dispatch(setMiniSidenav(!miniSidenav)));
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
@@ -104,6 +105,10 @@ function DashboardNavbar({ absolute, light, isMini }) {
       />
     </Menu>
   );
+
+  const handleLogout = async () => {
+    await logout();
+  };
   return (
     <AppBar
       position={absolute ? "absolute" : navbarType}
@@ -124,22 +129,25 @@ function DashboardNavbar({ absolute, light, isMini }) {
         {isMini ? null : (
           <UIBox flex_end sx={(theme) => navbarRow(theme, { isMini })}>
             <UIBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
-                <IconButton sx={navbarIconButton} size="small">
-                  <Icon
-                    sx={({ palette: { dark, white } }) => ({
-                      color: light ? white.main : dark.main,
-                    })}>
-                    account_circle
-                  </Icon>
-                  <UITypography
-                    variant="button"
-                    fontWeight="medium"
-                    color={light ? "white" : "dark"}>
-                    Sign in
-                  </UITypography>
-                </IconButton>
-              </Link>
+              {/* <Link to="/authentication/sign-in/basic"> */}
+              <IconButton
+                sx={navbarIconButton}
+                size="small"
+                onClick={handleLogout}>
+                <Icon
+                  sx={({ palette: { dark, white } }) => ({
+                    color: light ? white.main : dark.main,
+                  })}>
+                  account_circle
+                </Icon>
+                <UITypography
+                  variant="button"
+                  fontWeight="medium"
+                  color={light ? "white" : "dark"}>
+                  Logout
+                </UITypography>
+              </IconButton>
+              {/* </Link> */}
               <IconButton
                 size="small"
                 color="inherit"

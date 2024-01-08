@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import styles from "./index.module.scss";
 import Item from "./Item";
 
-const ProductCard = ({ name }) => {
+const ProductCard = ({ name, description, id }) => {
   const [isSmallContainer, setIsSmallContainer] = useState(false);
   const containerRef = useRef(null);
   useEffect(() => {
@@ -36,7 +36,7 @@ const ProductCard = ({ name }) => {
               className={`${styles.media_container} ${styles.image_container}`}>
               <div className={`${styles.media_fill} ${styles.image_fill}`}>
                 <div>
-                  <Item name={name} />
+                  <Item name={name} description={description} id={id} />
                 </div>
               </div>
             </div>

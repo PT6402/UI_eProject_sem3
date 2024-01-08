@@ -39,6 +39,7 @@ UIButton.propTypes = {
     "error",
     "light",
     "dark",
+    "black",
   ]),
   circular: PropTypes.bool,
   iconOnly: PropTypes.bool,

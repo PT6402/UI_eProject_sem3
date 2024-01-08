@@ -5,11 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { useKeyDown } from "hooks/useKeyDown";
 
-import { Backdrop } from "components/common";
-
 import styles from "./index.module.scss";
 import FrameUI from "../../../../helpers/FrameUI";
 import { CssBaseline } from "@mui/material";
+import Backdrop from "../Backdrop";
 
 const UIModalCenter = ({
   children,

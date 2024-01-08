@@ -5,23 +5,26 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 
-// Soft UI Dashboard PRO React components
-import SoftBox from "components/common/SoftBox";
-import SoftTypography from "components/common/SoftTypography";
-
 // Images
-import curved14 from "assets/images/curved-images/curved14.jpg";
-import masterCardLogo from "assets/images/logos/mastercard.png";
+import curved14 from "assets/images/private/curved-images/curved14.jpg";
+import masterCardLogo from "assets/images/private/logos/mastercard.png";
+import { UIBox, UITypography } from "../../../../common";
+import { scale } from "chroma-js";
+import { useDispatch } from "react-redux";
+import { setStatus, setType } from "../../../../../context/modalSlice";
 
 function MasterCard({ color, number, holder, expires }) {
   const numbers = [...`${number}`];
-
+  const dispatch = useDispatch();
   if (numbers.length < 16 || numbers.length > 16) {
     throw new Error(
       "Invalid value for the prop number, the value for the number prop shouldn't be greater than or less than 16 digits"
     );
   }
-
+  const handleChangeModal = () => {
+    dispatch(setStatus(true));
+    dispatch(setType());
+  };
   const num1 = numbers.slice(0, 4).join("");
   const num2 = numbers.slice(4, 8).join("");
   const num3 = numbers.slice(8, 12).join("");
@@ -29,79 +32,73 @@ function MasterCard({ color, number, holder, expires }) {
 
   return (
     <Card
-      sx={({
-        palette: { gradients },
-        functions: { linearGradient, rgba },
-        boxShadows: { xl },
-      }) => ({
-        background: gradients[color]
-          ? `${linearGradient(
-              rgba(gradients[color].main, 0.8),
-              rgba(gradients[color].state, 0.8)
-            )}, url(${curved14})`
-          : `${linearGradient(
-              rgba(gradients.dark.main, 0.8),
-              rgba(gradients.dark.state, 0.8)
-            )}, url(${curved14})`,
-        boxShadow: xl,
+      sx={() => ({
+        boxShadow:
+          "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px",
+        width: "100%",
+        transition: "transform 0.2s ease-in-out",
+        "&:hover": {
+          transform: "scale(1.05)",
+        },
+        cursor: "pointer",
       })}>
-      <SoftBox p={2}>
-        <SoftBox color="white" p={1} lineHeight={0} display="inline-block">
-          <Icon fontSize="default">wifi</Icon>
-        </SoftBox>
-        <SoftTypography
-          variant="h5"
-          color="white"
-          fontWeight="medium"
-          sx={{ mt: 3, mb: 5, pb: 1 }}>
-          {num1}&nbsp;&nbsp;&nbsp;{num2}&nbsp;&nbsp;&nbsp;{num3}
-          &nbsp;&nbsp;&nbsp;{num4}
-        </SoftTypography>
-        <SoftBox
+      <UIBox p={5}>
+        <UITypography variant="h5" color="dark" fontWeight="medium">
+          Contract-id:
+          <UITypography
+            variant="h5"
+            color="dark"
+            fontWeight="medium"
+            sx={{
+              mb: 5,
+              pb: 1,
+              pt: 1,
+              border: ".2rem solid grey",
+              textAlign: "center",
+              borderRadius: "1rem",
+            }}>
+            {num1}&nbsp;&nbsp;&nbsp;{num2}&nbsp;&nbsp;&nbsp;{num3}
+            &nbsp;&nbsp;&nbsp;{num4}
+          </UITypography>
+        </UITypography>
+        <UIBox
           display="flex"
           justifyContent="space-between"
-          alignItems="center">
-          <SoftBox display="flex" alignItems="center">
-            <SoftBox mr={3} lineHeight={1}>
-              <SoftTypography
+          alignItems="center"
+          width="100%">
+          <UIBox display="flex" alignItems="center">
+            <UIBox mr={3} lineHeight={1}>
+              <UITypography
                 variant="button"
-                color="white"
+                color="dark"
                 fontWeight="regular"
                 opacity={0.8}>
                 Card Holder
-              </SoftTypography>
-              <SoftTypography
+              </UITypography>
+              <UITypography
                 variant="h6"
-                color="white"
+                color="dark"
                 fontWeight="medium"
                 textTransform="capitalize">
                 {holder}
-              </SoftTypography>
-            </SoftBox>
-            <SoftBox lineHeight={1}>
-              <SoftTypography
+              </UITypography>
+            </UIBox>
+            <UIBox lineHeight={1}>
+              <UITypography
                 variant="button"
-                color="white"
+                color="dark"
                 fontWeight="regular"
                 opacity={0.8}>
                 Expires
-              </SoftTypography>
-              <SoftTypography variant="h6" color="white" fontWeight="medium">
+              </UITypography>
+              <UITypography variant="h6" color="dark" fontWeight="medium">
                 {expires}
-              </SoftTypography>
-            </SoftBox>
-          </SoftBox>
-          <SoftBox display="flex" justifyContent="flex-end" width="20%">
-            <SoftBox
-              component="img"
-              src={masterCardLogo}
-              alt="master card"
-              width="60%"
-              mt={1}
-            />
-          </SoftBox>
-        </SoftBox>
-      </SoftBox>
+              </UITypography>
+            </UIBox>
+          </UIBox>
+          <UIBox display="flex" justifyContent="flex-end" width="100%"></UIBox>
+        </UIBox>
+      </UIBox>
     </Card>
   );
 }

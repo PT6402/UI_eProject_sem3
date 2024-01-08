@@ -6,40 +6,66 @@ import {
   PublicRoutes,
   ProtectedRoutes,
   AdminRouters,
-  EmployeeRoutes,
+  TechRoutes,
+  SaleRoutes,
 } from "routes";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import { useEffect, useState } from "react";
+import { useAuth } from "./hooks/useAuth";
+import { Loader } from "./components/common";
 
 function App() {
-  return (
-    <>
-      <Routes>
-        {/* USER */}
-        <Route path="/" element={<Public />}>
-          {GetRoutes(PublicRoutes)}
-        </Route>
+  const [status, setStatus] = useState(false);
+  const { checkReloadPage, isLoading } = useAuth();
+  useEffect(() => {
+    checkReloadPage().then(() => setStatus(true));
+  }, []);
+  if (status) {
+    return (
+      <>
+        {!isLoading && (
+          <Routes>
+            {/* USER */}
+            <Route path="/" element={<Public />}>
+              {GetRoutes(PublicRoutes)}
+            </Route>
 
-        {/* ADMIN */}
-        <Route element={<ProtectedRoutes needStaff="admin" />}>
-          <Route path="/admin" element={<Private routes={AdminRouters} />}>
-            {GetRoutes(AdminRouters)}
-          </Route>
-        </Route>
+            {/* ADMIN */}
+            <Route element={<ProtectedRoutes needStaff="admin" />}>
+              <Route path="/admin" element={<Private routes={AdminRouters} />}>
+                {GetRoutes(AdminRouters)}
+              </Route>
+            </Route>
 
-        {/* EMPLOYEE */}
-        <Route element={<ProtectedRoutes needStaff="employee" />}>
-          <Route path="/employee" element={<Private routes={EmployeeRoutes} />}>
-            {GetRoutes(EmployeeRoutes)}
-          </Route>
-        </Route>
+            {/* EMPLOYEE tech */}
+            <Route element={<ProtectedRoutes needStaff="Emp_Technician" />}>
+              <Route
+                path="/employee_tech"
+                element={<Private routes={TechRoutes} />}>
+                {GetRoutes(TechRoutes)}
+              </Route>
+            </Route>
 
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </>
-  );
+            {/* EMPLOYEE sale */}
+            <Route element={<ProtectedRoutes needStaff="Emp_Sale" />}>
+              <Route
+                path="/employee_sale"
+                element={<Private routes={SaleRoutes} />}>
+                {GetRoutes(SaleRoutes)}
+              </Route>
+            </Route>
+
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        )}
+      </>
+    );
+  } else {
+    return <>{isLoading && <Loader />}</>;
+  }
 }
 
 export default App;

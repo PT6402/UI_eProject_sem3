@@ -9,7 +9,7 @@ const ToastContent = ({ message, close, status }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       close();
-    }, 4000);
+    }, 5000);
 
     return () => {
       clearTimeout(timer);

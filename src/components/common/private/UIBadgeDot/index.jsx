@@ -4,7 +4,7 @@ import UIBox from "components/common/private/UIBox";
 import UITypography from "components/common/private/UITypography";
 
 const UIBadgeDot = forwardRef(
-  ({ variant, color, size, badgeContent, font, ...rest }, ref) => {
+  ({ variant, color, size, badgeContent, font, fontSizeCus, ...rest }, ref) => {
     let finalSize;
     let fontSize;
     let padding;
@@ -56,7 +56,7 @@ const UIBadgeDot = forwardRef(
           variant={fontSize}
           fontWeight={font.weight ? font.weight : "regular"}
           color={font.color ? font.color : "dark"}
-          sx={{ lineHeight: 0 }}>
+          sx={{ lineHeight: 0, fontSize: fontSizeCus }}>
           {badgeContent}
         </UITypography>
       </UIBox>

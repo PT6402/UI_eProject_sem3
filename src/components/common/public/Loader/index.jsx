@@ -19,7 +19,7 @@ const Loader = ({
   if (noPortal) {
     return (
       <>
-        <div className={`${styles.loader_np_container} ${containerClassName}`}>
+        {/* <div className={`${styles.loader_np_container} ${containerClassName}`}>
           <MediaContainer
             image={LoaderImage}
             alt=""
@@ -27,7 +27,8 @@ const Loader = ({
             fillClassName={styles.image_fill}
             mediaClassName={`${styles.image} ${loaderClassName}`}
           />
-        </div>
+        </div> */}
+        loading...
       </>
     );
   }
@@ -40,13 +41,14 @@ const Loader = ({
             backdropClassName={`${styles.backdrop} ${backdropClassName}`}
           />
           <div className={`${styles.loader_container} ${containerClassName}`}>
-            <MediaContainer
+            {/* <MediaContainer
               image={LoaderImage}
               alt=""
               containerClassName={styles.image_container}
               fillClassName={styles.image_fill}
               mediaClassName={`${styles.image} ${loaderClassName}`}
-            />
+            /> */}
+            loadding...
           </div>
         </>,
         overlayElement

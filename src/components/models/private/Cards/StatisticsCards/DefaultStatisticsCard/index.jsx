@@ -4,60 +4,57 @@ import PropTypes from "prop-types";
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-
-// Soft UI Dashboard PRO React components
-import SoftBox from "components/common/SoftBox";
-import SoftTypography from "components/common/SoftTypography";
+import { UIBox, UITypography } from "../../../../../common";
 
 function DefaultStatisticsCard({ title, count, percentage, dropdown }) {
   return (
     <Card>
-      <SoftBox p={2}>
+      <UIBox p={2}>
         <Grid container>
           <Grid item xs={7}>
-            <SoftBox mb={0.5} lineHeight={1}>
-              <SoftTypography
+            <UIBox mb={0.5} lineHeight={1}>
+              <UITypography
                 variant="button"
                 fontWeight="medium"
                 color="text"
                 textTransform="capitalize">
                 {title}
-              </SoftTypography>
-            </SoftBox>
-            <SoftBox lineHeight={1}>
-              <SoftTypography variant="h5" fontWeight="bold">
+              </UITypography>
+            </UIBox>
+            <UIBox lineHeight={1}>
+              <UITypography variant="h5" fontWeight="bold">
                 {count}
-              </SoftTypography>
-              <SoftTypography
+              </UITypography>
+              <UITypography
                 variant="button"
                 fontWeight="bold"
                 color={percentage.color}>
                 {percentage.value}&nbsp;
-                <SoftTypography
+                <UITypography
                   variant="button"
                   fontWeight="regular"
                   color="secondary">
                   {percentage.label}
-                </SoftTypography>
-              </SoftTypography>
-            </SoftBox>
+                </UITypography>
+              </UITypography>
+            </UIBox>
           </Grid>
           <Grid item xs={5}>
             {dropdown && (
-              <SoftBox width="100%" textAlign="right" lineHeight={1}>
-                <SoftTypography
+              <UIBox width="100%" textAlign="right" lineHeight={1}>
+                <UITypography
                   variant="caption"
                   color="secondary"
                   sx={{ cursor: "pointer" }}
                   onClick={dropdown.action}>
                   {dropdown.value}
-                </SoftTypography>
+                </UITypography>
                 {dropdown.menu}
-              </SoftBox>
+              </UIBox>
             )}
           </Grid>
         </Grid>
-      </SoftBox>
+      </UIBox>
     </Card>
   );
 }

@@ -233,9 +233,9 @@
   font-size: 1.4rem;
   letter-spacing: $ls-link;
   position: relative;
-  transform: translateX(28%);
+  transform: translateX(-20%);
   @media (max-width: 1000px) {
-    transform: translateX(-10%);
+    transform: translateX(-15%);
   }
   @media (max-width: 930px) {
     transform: translateX(-8%);

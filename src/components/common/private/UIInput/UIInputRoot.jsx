@@ -17,6 +17,10 @@ const UIInputRoot = styled(InputBase)(({ theme, ownerState }) => {
     fontSize: fontSize.xs,
     padding: `${pxToRem(4)} ${pxToRem(12)}`,
   });
+  const uiPublicStyles = () => ({
+    fontSize: "1.4rem !important",
+    padding: `${pxToRem(23)} ${pxToRem(12)}`,
+  });
 
   // styles for the input with size="large"
   const largeStyles = () => ({
@@ -103,6 +107,7 @@ const UIInputRoot = styled(InputBase)(({ theme, ownerState }) => {
     backgroundColor: disabled ? `${grey[200]} !important` : white.main,
     pointerEvents: disabled ? "none" : "auto",
     ...(size === "small" && smallStyles()),
+    ...(size === "uipublic" && uiPublicStyles()),
     ...(size === "large" && largeStyles()),
     ...(error && errorStyles()),
     ...(success && successStyles()),

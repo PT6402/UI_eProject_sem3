@@ -11,12 +11,12 @@ import Tooltip from "@mui/material/Tooltip";
 import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard PRO React components
-import SoftBox from "components/common/SoftBox";
-import SoftTypography from "components/common/SoftTypography";
 
 // Soft UI Dashboard PRO React base styles
-import colors from "assets/themes/private/base/colors";
-import typography from "assets/themes/private/base/typography";
+
+import { UIBox, UITypography } from "../../../../../common";
+import colors from "../../../../../../assets/themes/private/base/colors";
+import typography from "../../../../../../assets/themes/private/base/typography";
 
 function ProfileInfoCard({ title, description, info, social, action }) {
   const labels = [];
@@ -44,22 +44,22 @@ function ProfileInfoCard({ title, description, info, social, action }) {
 
   // Render the card info items
   const renderItems = labels.map((label, key) => (
-    <SoftBox key={label} display="flex" py={1} pr={2}>
-      <SoftTypography
+    <UIBox key={label} display="flex" py={1} pr={2}>
+      <UITypography
         variant="button"
         fontWeight="bold"
         textTransform="capitalize">
         {label}: &nbsp;
-      </SoftTypography>
-      <SoftTypography variant="button" fontWeight="regular" color="text">
+      </UITypography>
+      <UITypography variant="button" fontWeight="regular" color="text">
         &nbsp;{values[key]}
-      </SoftTypography>
-    </SoftBox>
+      </UITypography>
+    </UIBox>
   ));
 
   // Render the card social media icons
   const renderSocial = social.map(({ link, icon, color }) => (
-    <SoftBox
+    <UIBox
       key={color}
       component="a"
       href={link}
@@ -71,24 +71,24 @@ function ProfileInfoCard({ title, description, info, social, action }) {
       pl={0.5}
       lineHeight={1}>
       {icon}
-    </SoftBox>
+    </UIBox>
   ));
 
   return (
     <Card sx={{ height: "100%" }}>
-      <SoftBox
+      <UIBox
         display="flex"
         justifyContent="space-between"
         alignItems="center"
         pt={2}
         px={2}>
-        <SoftTypography
+        <UITypography
           variant="h6"
           fontWeight="medium"
           textTransform="capitalize">
           {title}
-        </SoftTypography>
-        <SoftTypography
+        </UITypography>
+        <UITypography
           component={Link}
           to={action.route}
           variant="body2"
@@ -96,30 +96,30 @@ function ProfileInfoCard({ title, description, info, social, action }) {
           <Tooltip title={action.tooltip} placement="top">
             <Icon>edit</Icon>
           </Tooltip>
-        </SoftTypography>
-      </SoftBox>
-      <SoftBox p={2}>
-        <SoftBox mb={2} lineHeight={1}>
-          <SoftTypography variant="button" color="text" fontWeight="regular">
+        </UITypography>
+      </UIBox>
+      <UIBox p={2}>
+        <UIBox mb={2} lineHeight={1}>
+          <UITypography variant="button" color="text" fontWeight="regular">
             {description}
-          </SoftTypography>
-        </SoftBox>
-        <SoftBox opacity={0.3}>
+          </UITypography>
+        </UIBox>
+        <UIBox opacity={0.3}>
           <Divider />
-        </SoftBox>
-        <SoftBox>
+        </UIBox>
+        <UIBox>
           {renderItems}
-          <SoftBox display="flex" py={1} pr={2}>
-            <SoftTypography
+          <UIBox display="flex" py={1} pr={2}>
+            <UITypography
               variant="button"
               fontWeight="bold"
               textTransform="capitalize">
               social: &nbsp;
-            </SoftTypography>
+            </UITypography>
             {renderSocial}
-          </SoftBox>
-        </SoftBox>
-      </SoftBox>
+          </UIBox>
+        </UIBox>
+      </UIBox>
     </Card>
   );
 }

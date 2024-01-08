@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { UIBox, UISelect, UITypography } from "../../../../../common";
 import { Grid } from "@mui/material";
 import FormField from "../../Connects/Detail/FormField";
@@ -8,10 +9,10 @@ import {
 } from "../../../../../../helpers/GetAddressApi";
 import { useEffect, useRef, useState } from "react";
 
-export default function FormAddressStore() {
+export default function FormCreateAddressStore({ handleGetData }) {
   const districtInput = useRef();
   const wardInput = useRef();
-
+  const [addressInput, setAddressInpt] = useState("");
   const [addressSelected, setAddressSelected] = useState({
     provice: null,
     district: null,
@@ -22,13 +23,28 @@ export default function FormAddressStore() {
     districts: [],
     wards: [],
   });
-
+  useEffect(() => {
+    handleGetData({
+      address: addressInput,
+      province_code: addressSelected.provice?.value.code,
+      district_code: addressSelected.district?.value,
+      ward_code: addressSelected.ward?.value,
+      phone_code: addressSelected.provice?.value.phone_code,
+    });
+    // console.log({
+    //   address: addressInput,
+    //   province_code: addressSelected.provice?.value.code,
+    //   district_code: addressSelected.district?.value,
+    //   ward_code: addressSelected.ward?.value,
+    //   phone_code: addressSelected.provice?.value.phone_code,
+    // });
+  }, [addressSelected, addressInput]);
   useEffect(() => {
     GetProvices().then((res) =>
       setAddress((prev) => ({ ...prev, provices: res.data }))
     );
     if (addressSelected.provice != null) {
-      GetDistrict(addressSelected.provice.value).then((res) =>
+      GetDistrict(addressSelected.provice.value.code).then((res) =>
         setAddress((prev) => ({ ...prev, districts: res.data.districts }))
       );
     }
@@ -42,7 +58,10 @@ export default function FormAddressStore() {
   const provicesSelect = [];
   if (address.provices != null) {
     address.provices.map((item) => {
-      provicesSelect.push({ value: item.code, label: item.name });
+      provicesSelect.push({
+        value: { code: item.code, phone_code: item.phone_code },
+        label: item.name,
+      });
     });
   }
   const districtsSelect = [];
@@ -134,7 +153,12 @@ export default function FormAddressStore() {
             />
           </Grid>
           <Grid item xs={12} sm={5}>
-            <FormField type="text" label="Address" />
+            <FormField
+              type="text"
+              label="Address"
+              value={addressInput}
+              onChange={(e) => setAddressInpt(e.target.value)}
+            />
           </Grid>
         </Grid>
       </UIBox>

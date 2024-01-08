@@ -5,18 +5,17 @@ import PropTypes from "prop-types";
 import Link from "@mui/material/Link";
 
 // Soft UI Dashboard PRO React components
-import SoftBox from "components/common/SoftBox";
-import SoftTypography from "components/common/SoftTypography";
 
 // Soft UI Dashboard PRO React base styles
 import colors from "assets/themes/private/base/colors";
+import { UIBox, UITypography } from "../../../../../common";
 
 function ComplexProfileCard({ image, name, position, description, social }) {
   const { socialMediaColors } = colors;
 
   // Render the social media icons
   const renderSocial = social.map(({ link, icon, color }, key) => (
-    <SoftBox
+    <UIBox
       key={color}
       component={Link}
       href={link}
@@ -29,13 +28,13 @@ function ComplexProfileCard({ image, name, position, description, social }) {
       pl={key === 0 ? 0 : 1.5}
       lineHeight={1}>
       {icon}
-    </SoftBox>
+    </UIBox>
   ));
 
   return (
-    <SoftBox width="100%" height="100%" display="flex" alignItems="center">
-      <SoftBox width="40%" height="100%">
-        <SoftBox
+    <UIBox width="100%" height="100%" display="flex" alignItems="center">
+      <UIBox width="40%" height="100%">
+        <UIBox
           component="img"
           src={image}
           alt={name}
@@ -45,28 +44,28 @@ function ComplexProfileCard({ image, name, position, description, social }) {
           height="100%"
           sx={{ objectFit: "cover" }}
         />
-      </SoftBox>
-      <SoftBox width="60%" py={2.5} px={4}>
-        <SoftBox mb={1} lineHeight={1}>
-          <SoftTypography variant="h5" fontWeight="bold">
+      </UIBox>
+      <UIBox width="60%" py={2.5} px={4}>
+        <UIBox mb={1} lineHeight={1}>
+          <UITypography variant="h5" fontWeight="bold">
             {name}
-          </SoftTypography>
-          <SoftTypography
+          </UITypography>
+          <UITypography
             variant="button"
             color="text"
             textTransform="uppercase"
             fontWeight="medium">
             {position}
-          </SoftTypography>
-        </SoftBox>
-        <SoftBox mb={3}>
-          <SoftTypography variant="body2" color="text">
+          </UITypography>
+        </UIBox>
+        <UIBox mb={3}>
+          <UITypography variant="body2" color="text">
             {description}
-          </SoftTypography>
-        </SoftBox>
-        <SoftBox display="flex">{renderSocial}</SoftBox>
-      </SoftBox>
-    </SoftBox>
+          </UITypography>
+        </UIBox>
+        <UIBox display="flex">{renderSocial}</UIBox>
+      </UIBox>
+    </UIBox>
   );
 }
 

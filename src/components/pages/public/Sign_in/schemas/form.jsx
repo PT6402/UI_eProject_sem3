@@ -1,19 +1,23 @@
 const form = {
   formId: "form-login",
   formField: {
-    phone_account: {
-      name: "phone_account",
-      label: "Phone/Account",
+    account_phone: {
+      name: "account_phone",
+      label: "Account/Phone",
       type: "text",
-      placeholder: "Enter phone/account",
-      errorMsg: "Phone/Account is not empty",
+      placeholder: "Enter account/phone",
+      errorMsg: [
+        "account/phone is not empty",
+        "account invalid",
+        "phone is invalid",
+      ],
     },
-    pass_otp: {
-      name: "pass_otp",
-      label: "Password/OTP code",
-      type: "text",
+    otp_pass: {
+      name: "otp_pass",
+      label: "OTP/Password",
+      type: "password",
       placeholder: "Enter Password/OTP code",
-      errorMsg: "Password/OTP code is not empty",
+      errorMsg: "OTP/Password is not empty",
     },
   },
 };

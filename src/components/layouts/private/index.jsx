@@ -8,8 +8,7 @@ import { setMiniSidenav } from "context/privateUISlice";
 import { PrivateTheme } from "assets/themes";
 import { UIBox } from "components/common";
 //
-import Sidenav from "./SideNav";
-import Footer from "./Footer";
+import Sidenav from "./Sidenav";
 import DashboardLayout from "./DashboardLayout";
 import DashboardNavbar from "./DashboardNavbar";
 import ModalType from "./Modal";

@@ -5,10 +5,9 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
+import { UIBox, UITypography } from "../../../../../common";
 
 // Soft UI Dashboard PRO React components
-import SoftBox from "components/common/SoftBox";
-import SoftTypography from "components/common/SoftTypography";
 
 function MiniStatisticsCard({
   bgColor,
@@ -19,13 +18,21 @@ function MiniStatisticsCard({
   direction,
 }) {
   return (
-    <Card>
-      <SoftBox bgColor={bgColor} variant="gradient">
-        <SoftBox p={2}>
+    <Card
+      sx={{
+        boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+        transition: "transform 0.2s ease-in-out",
+        "&:hover": {
+          transform: "scale(1.05)",
+        },
+        cursor: "pointer",
+      }}>
+      <UIBox bgColor={bgColor} variant="gradient">
+        <UIBox p={2}>
           <Grid container alignItems="center">
-            {direction === "left" ? (
+            {/* {direction === "left" ? (
               <Grid item>
-                <SoftBox
+                <UIBox
                   variant="gradient"
                   bgColor={bgColor === "white" ? icon.color : "white"}
                   color={bgColor === "white" ? "white" : "dark"}
@@ -39,36 +46,37 @@ function MiniStatisticsCard({
                   <Icon fontSize="small" color="inherit">
                     {icon.component}
                   </Icon>
-                </SoftBox>
+                </UIBox>
               </Grid>
-            ) : null}
+            ) : null} */}
             <Grid item xs={8}>
-              <SoftBox ml={direction === "left" ? 2 : 0} lineHeight={1}>
-                <SoftTypography
+              <UIBox ml={direction === "left" ? 2 : 0} lineHeight={1}>
+                <UITypography
                   variant="button"
                   color={bgColor === "white" ? "text" : "white"}
                   opacity={bgColor === "white" ? 1 : 0.7}
                   textTransform="capitalize"
-                  fontWeight={title.fontWeight}>
+                  fontWeight={title.fontWeight}
+                  sx={{ fontSize: "1.4rem", whiteSpace: "nowrap" }}>
                   {title.text}
-                </SoftTypography>
-                <SoftTypography
+                </UITypography>
+                <UITypography
                   variant="h5"
                   fontWeight="bold"
                   color={bgColor === "white" ? "dark" : "white"}>
                   {count}{" "}
-                  <SoftTypography
+                  <UITypography
                     variant="button"
                     color={percentage.color}
                     fontWeight="bold">
                     {percentage.text}
-                  </SoftTypography>
-                </SoftTypography>
-              </SoftBox>
+                  </UITypography>
+                </UITypography>
+              </UIBox>
             </Grid>
-            {direction === "right" ? (
+            {/* {direction === "right" ? (
               <Grid item xs={4}>
-                <SoftBox
+                <UIBox
                   variant="gradient"
                   bgColor={bgColor === "white" ? icon.color : "white"}
                   color={bgColor === "white" ? "white" : "dark"}
@@ -83,12 +91,12 @@ function MiniStatisticsCard({
                   <Icon fontSize="small" color="inherit">
                     {icon.component}
                   </Icon>
-                </SoftBox>
+                </UIBox>
               </Grid>
-            ) : null}
+            ) : null} */}
           </Grid>
-        </SoftBox>
-      </SoftBox>
+        </UIBox>
+      </UIBox>
     </Card>
   );
 }

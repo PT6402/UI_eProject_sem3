@@ -9,6 +9,7 @@ const privateUISlice = createSlice({
     fixedNavbar: true,
     layout: "dashboard",
     sidenavColor: "info",
+    buttonTable: { id: null, isOpen: false },
   },
   reducers: {
     setMiniSidenav: (state, action) => {
@@ -26,6 +27,9 @@ const privateUISlice = createSlice({
     setLayout: (state, action) => {
       state.layout = action.payload;
     },
+    setOpen: (state, action) => {
+      state.buttonTable = action.payload;
+    },
   },
 });
 
@@ -35,5 +39,6 @@ export const {
   setMiniSidenav,
   setTransparentNavbar,
   setTransparentSidenav,
+  setOpen,
 } = privateUISlice.actions;
 export default privateUISlice.reducer;

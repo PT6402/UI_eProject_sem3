@@ -1,0 +1,46 @@
+.container {
+  padding: 8rem 0 1.5rem 0;
+
+  @media (min-width: 768px) {
+    padding: 5rem 0 2.5rem 0;
+  }
+}
+.button_wrapper {
+  width: 100%;
+  // width: 100%;
+  // padding: 2rem 3rem 0;
+
+  .button {
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    // border: solid 0.2rem $back-c-button-primary;
+    border-radius: 1rem;
+    width: 100%;
+    background-color: #ee0033;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: $ls-button;
+
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    -moz-transition: all 0.1s ease-in;
+    -o-transition: all 0.1s ease-in;
+    -webkit-transition: all 0.1s ease-in;
+    transition: all 0.1s ease-in;
+    border: none;
+    &:active {
+      transform: scale(0.8);
+    }
+
+    &:hover {
+      transform: scale(1.05);
+      cursor: pointer;
+      // background: $back-c-button-hover !important;
+      // border-color: $back-c-button-hover;
+    }
+  }
+}

@@ -1,7 +1,60 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DefaultCell } from "../../../../models";
 import { UIButton } from "../../../../common";
+import {
+  GetDistrictByCode,
+  GetProviceByCode,
+  GetWardByCode,
+} from "../../../../../helpers/GetAddressApi";
+import { useAddressStore } from "../../../../../hooks/useAddressStore";
+import { useDispatch } from "react-redux";
+import { setStatusModal } from "../../../../../context/modalSlice";
+
+const convertStringToArray = (stringCode) => {
+  let listCode = stringCode.split("-").map((item) => Number(item));
+  return listCode;
+};
+
+const convertCodeToRegion = (code) => {
+  let region = {};
+  listPhoneCode.map((item) => {
+    let phoneCodeArr = convertStringToArray(item.code);
+    let checkCode = phoneCodeArr.find((phoneCode) => phoneCode == code);
+    if (checkCode != null) {
+      region = { name: item.name, id: item.id };
+    }
+  });
+  return region;
+};
+
+const handleGetRow = async (item) => {
+  const itemNew = { ...item };
+  await GetProviceByCode(item.province_code).then(
+    (res) => (itemNew.province_name = res.data.name)
+  );
+  await GetDistrictByCode(item.district_code).then(
+    (res) => (itemNew.district_name = res.data.name)
+  );
+  await GetWardByCode(item.ward_code).then(
+    (res) => (itemNew.ward_name = res.data.name)
+  );
+  return itemNew;
+};
+const handleGetRowAddresUser = async (item) => {
+  const itemNew = { ...item };
+  await GetProviceByCode(item.province_code).then((res) => {
+    itemNew.province_name = res.data.name;
+    itemNew.phone_code = res.data.phone_code;
+  });
+  await GetDistrictByCode(item.district_code).then(
+    (res) => (itemNew.district_name = res.data.name)
+  );
+  await GetWardByCode(item.ward_code).then(
+    (res) => (itemNew.ward_name = res.data.name)
+  );
+  return itemNew;
+};
 
 const listPhoneCode = [
   {
@@ -20,76 +73,54 @@ const listPhoneCode = [
     code: "271-274-251-276-254-28-272-277-273-296-275-270-294-293-297-299-291-290-292",
   },
 ];
-const convertStringToArray = (stringCode) => {
-  let listCode = stringCode.split("-").map((item) => Number(item));
-  return listCode;
-};
-const convertCodeToRegion = (code, listPhoneCode) => {
-  let regionName = null;
-  listPhoneCode.map((item) => {
-    let phoneCodeArr = convertStringToArray(item.code);
-    let checkCode = phoneCodeArr.find((phoneCode) => phoneCode == code);
 
-    if (checkCode != null) {
-      regionName = item.name;
-    }
-  });
-  return regionName;
-};
-
-const data = {
-  columns: [
-    {
-      Header: "Name",
-      accessor: "name",
-      Cell: ({ value }) => <DefaultCell value={value} />,
-    },
-    {
-      Header: "Address",
-      accessor: "address",
-      Cell: ({ value }) => <DefaultCell value={value} />,
-    },
-    {
-      Header: "Region",
-      accessor: "region",
-      Cell: ({ value }) => (
-        <DefaultCell value={convertCodeToRegion(value, listPhoneCode)} />
-      ),
-    },
-    {
-      Header: "Action",
-      accessor: "id",
-      Cell: ({ value }) => (
-        <Link to={`/admin/address-stores/${value}`}>
-          <UIButton color="info" size="small">
-            Edit
+const columns = [
+  {
+    Header: "Address",
+    accessor: "address_full",
+    Cell: ({ value }) => <DefaultCell value={value} />,
+  },
+  {
+    Header: "Region",
+    accessor: "phone_name",
+    Cell: ({ value }) => <DefaultCell value={value} />,
+  },
+  {
+    Header: "Action",
+    accessor: "id",
+    Cell: ({ value }) => {
+      const { handleDelete } = useAddressStore();
+      const dispatch = useDispatch();
+      const handleDel = async () => {
+        await handleDelete({ id: value });
+        dispatch(setStatusModal());
+      };
+      return (
+        <>
+          <Link to={`/admin/address-stores/${value}`}>
+            <UIButton color="info" size="small">
+              Edit
+            </UIButton>
+          </Link>
+          <UIButton
+            color="error"
+            size="small"
+            sx={{ margin: "0 1rem" }}
+            onClick={() => handleDel()}>
+            Delete
           </UIButton>
-        </Link>
-      ),
+        </>
+      );
     },
-  ],
-
-  rows: [
-    {
-      id: 1,
-      name: "Cở sở 1",
-      address: "quan 1",
-      region: 209,
-    },
-    {
-      id: 2,
-      name: "Cơ sở 2",
-      address: "quan 12",
-      region: 236,
-    },
-    {
-      id: 3,
-      name: "Cơ sở 3",
-      address: "quan 9",
-      region: 251,
-    },
-  ],
+  },
+];
+const dataApiAddress = [];
+export {
+  listPhoneCode,
+  columns,
+  convertCodeToRegion,
+  handleGetRow,
+  dataApiAddress,
+  handleGetRowAddresUser,
+  convertStringToArray,
 };
-
-export default data;
-export { listPhoneCode };

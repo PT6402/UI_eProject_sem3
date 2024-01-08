@@ -11,7 +11,6 @@ const UIInput = forwardRef(
   ({ size, icon, error, success, disabled, ...rest }, ref) => {
     let template;
     const iconDirection = icon.direction;
-
     if (icon.component && icon.direction === "left") {
       template = (
         <UIInputWithIconRoot
@@ -84,7 +83,7 @@ UIInput.defaultProps = {
 
 // Typechecking props for the UIInput
 UIInput.propTypes = {
-  size: PropTypes.oneOf(["small", "medium", "large"]),
+  size: PropTypes.oneOf(["small", "medium", "large", "uipublic"]),
   icon: PropTypes.shape({
     component: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
     direction: PropTypes.oneOf(["none", "left", "right"]),

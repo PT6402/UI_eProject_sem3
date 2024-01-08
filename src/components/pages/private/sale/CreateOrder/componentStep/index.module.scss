@@ -1,0 +1,17 @@
+.label {
+  span {
+    font-family: $font-f-secondary;
+    font-weight: $font-w-700;
+    letter-spacing: $ls-secondary;
+  }
+
+  .input {
+    border: solid 0.2rem #9e9e9e;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    width: 100%;
+    font-size: 1.6rem;
+
+    // margin-bottom: 3rem;
+  }
+}

@@ -13,7 +13,14 @@ import UIEditorRoot from "./UIEditorRoot";
 
 // Material Dashboard 2 PRO React context
 
-function MDEditor({ value, edit, input }) {
+function MDEditor({
+  value,
+  edit,
+  input,
+  readOnly,
+  toolbarHidden,
+  placeholder,
+}) {
   const darkMode = false;
   const [convertedContent, setConvertedContent] = React.useState(null);
   const [editorState, setEditorState] = React.useState(() => {
@@ -33,7 +40,13 @@ function MDEditor({ value, edit, input }) {
   return (
     <UIEditorRoot ownerState={{ darkMode }}>
       {value && typeof value === "function" && value(convertedContent)}
-      <Editor editorState={editorState} onEditorStateChange={setEditorState} />
+      <Editor
+        editorState={editorState}
+        onEditorStateChange={setEditorState}
+        readOnly={readOnly}
+        toolbarHidden={toolbarHidden}
+        placeholder={placeholder}
+      />
     </UIEditorRoot>
   );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useEffect, useState } from "react";
 import PropTypes from "prop-types";
@@ -19,6 +20,7 @@ import {
   UISelect,
   UIInput,
   UIPagination,
+  UIButton,
 } from "../../../../common";
 import DataTableHeadCell from "./DataTableHeadCell";
 import DataTableBodyCell from "./DataTableBodyCell";
@@ -31,6 +33,10 @@ function DataTable({
   pagination,
   isSorted,
   noEndBorder,
+  bgGrey,
+  handleOpen,
+  duration,
+  fontSizeHead,
 }) {
   const defaultValue = entriesPerPage.defaultValue
     ? entriesPerPage.defaultValue
@@ -178,7 +184,11 @@ function DataTable({
       ) : null}
       <Table
         {...getTableProps()}
-        sx={{ zIndex: "99 !important", position: "relative" }}>
+        sx={{
+          zIndex: "99 !important",
+          position: "relative",
+          backgroundColor: bgGrey == true ? "rgb(232, 233, 235)" : null,
+        }}>
         <UIBox component="thead">
           {headerGroups.map((headerGroup, key) => (
             <TableRow key={key} {...headerGroup.getHeaderGroupProps()}>
@@ -190,7 +200,8 @@ function DataTable({
                   )}
                   width={column.width ? column.width : "auto"}
                   align={column.align ? column.align : "left"}
-                  sorted={setSortedValue(column)}>
+                  sorted={setSortedValue(column)}
+                  fontSize={fontSizeHead}>
                   {column.render("Header")}
                 </DataTableHeadCell>
               ))}
@@ -202,15 +213,27 @@ function DataTable({
             prepareRow(row);
             return (
               <TableRow key={key} {...row.getRowProps()}>
-                {row.cells.map((cell, key) => (
-                  <DataTableBodyCell
-                    key={key}
-                    noBorder={noEndBorder && rows.length - 1 === key}
-                    align={cell.column.align ? cell.column.align : "left"}
-                    {...cell.getCellProps()}>
-                    {cell.render("Cell")}
-                  </DataTableBodyCell>
-                ))}
+                {row.cells.map((cell, key) => {
+                  return (
+                    <DataTableBodyCell
+                      key={key}
+                      noBorder={noEndBorder && rows.length - 1 === key}
+                      align={cell.column.align ? cell.column.align : "left"}
+                      {...cell.getCellProps()}>
+                      {cell.render("Cell")}
+                    </DataTableBodyCell>
+                  );
+                })}
+                {duration && (
+                  <td style={{ width: "0" }}>
+                    <UIButton
+                      color="info"
+                      size="small"
+                      onClick={() => handleOpen(row.id)}>
+                      Duration
+                    </UIButton>
+                  </td>
+                )}
               </TableRow>
             );
           })}
@@ -277,6 +300,7 @@ DataTable.defaultProps = {
   pagination: { variant: "gradient", color: "info" },
   isSorted: true,
   noEndBorder: false,
+  bgGrey: false,
 };
 
 // Typechecking props for the DataTable
@@ -306,6 +330,7 @@ DataTable.propTypes = {
   }),
   isSorted: PropTypes.bool,
   noEndBorder: PropTypes.bool,
+  bgGrey: PropTypes.bool,
 };
 
 export default DataTable;

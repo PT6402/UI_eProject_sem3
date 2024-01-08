@@ -10,7 +10,7 @@ import boxShadow from "assets/themes/private/functions/boxShadow";
 // @emotion/react components
 import { keyframes } from "@emotion/react";
 
-const styles = (selectSize, selectError, selectSuccess) => {
+const styles = (selectSize, selectError, selectSuccess, custom) => {
   const { dark, white, text, light, inputColors, gradients, transparent } =
     colors;
   const { size, fontWeightRegular } = typography;
@@ -60,6 +60,27 @@ const styles = (selectSize, selectError, selectSuccess) => {
       transform: perspective(999px) rotateX(0deg) translateZ(0) translate3d(0, 0, 5px);
     }
   `;
+  const customInput = () => {
+    const inputcus = {
+      fontSize: "1.2rem ",
+      padding: "2rem 1rem",
+      fontFamily: "Roboto, sans-serif",
+    };
+    if (custom) {
+      return inputcus;
+    }
+    return null;
+  };
+  const customMenu = () => {
+    const inputcus = {
+      fontSize: "1.7rem !important",
+      fontFamily: "Roboto, sans-serif",
+    };
+    if (custom) {
+      return inputcus;
+    }
+    return null;
+  };
 
   return {
     control: (provided, state) => ({
@@ -79,6 +100,7 @@ const styles = (selectSize, selectError, selectSuccess) => {
       cursor: "pointer",
       borderColor: state.isFocused ? borderColorFocused : borderColorValue,
       boxShadow: state.isFocused ? boxShadowValue : "none",
+      ...customInput(),
     }),
 
     valueContainer: () => ({
@@ -111,6 +133,7 @@ const styles = (selectSize, selectError, selectSuccess) => {
       color: dark.main,
       position: "relative",
       margin: 0,
+      padding: "1rem 2rem",
     }),
 
     indicatorSeparator: () => ({
@@ -146,6 +169,7 @@ const styles = (selectSize, selectError, selectSuccess) => {
       borderRadius: borderRadius.md,
       transformOrigin: "50% 0",
       animation: `${prespective} 250ms ease forwards !important`,
+      ...customMenu(),
     }),
 
     menuList: (provided) => ({
@@ -155,6 +179,7 @@ const styles = (selectSize, selectError, selectSuccess) => {
 
     option: (provided, state) => ({
       ...provided,
+
       position: "relative",
       minWidth: pxToRem(160),
       minHeight: "unset",
@@ -167,8 +192,9 @@ const styles = (selectSize, selectError, selectSuccess) => {
       userSelect: state.isDisabled ? "none" : "auto",
       transition: "background-color 300ms ease, color 300ms ease",
       zIndex: "99999999999 !important",
+
       "&:after": {
-        content: "'Press to select'",
+        // content: "'Press to select'",
         display: "block",
         fontSize: size.xs,
         position: "absolute",
@@ -189,6 +215,7 @@ const styles = (selectSize, selectError, selectSuccess) => {
           opacity: 0.5,
         },
       },
+      ...customMenu(),
     }),
 
     multiValue: (provided) => ({

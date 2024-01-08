@@ -3,19 +3,31 @@ import { UIBox, UISelect, UITypography } from "../../../../../common";
 import MDEditor from "../../../../../common/private/UIEditor";
 import { Grid } from "@mui/material";
 import FormField from "./FormField";
-import { useState } from "react";
-export default function FormConnect({ data }) {
-  const [name, setName] = useState(data.name);
-  const [deposit, setDeposit] = useState(data.deposit);
-  const [description, setDecription] = useState(data.description || "");
-  console.log(description);
+import { useEffect, useState } from "react";
+export default function FormConnect({ data, handleGetData }) {
+  const [name, setName] = useState(data?.name);
+  const [deposit, setDeposit] = useState(data?.deposit);
+  const [description, setDecription] = useState(data?.description || "");
+  const [status, setStatus] = useState({
+    value: data?.status || false,
+    label: data?.status ? "Public" : "Hide" || "Hide",
+  });
+  const [firstLetter, setFirstLetter] = useState(data?.firstLetter || "");
   const value = (value) => {
     setDecription(value);
   };
-
+  useEffect(() => {
+    handleGetData({
+      name,
+      deposit,
+      description,
+      firstLetter,
+      status: status.value,
+    });
+  }, [name, deposit, description, status, firstLetter]);
   return (
     <UIBox>
-      <UITypography variant="h5">Update Connect</UITypography>
+      <UITypography variant="h5">Create Connect</UITypography>
       <UIBox mt={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
@@ -68,15 +80,24 @@ export default function FormConnect({ data }) {
               </UIBox>
               <UISelect
                 defaultValue={{
-                  value: data.status,
-                  label: data.status ? "Public" : "Hide",
+                  value: status.value,
+                  label: status.label,
                 }}
+                onChange={(choice) => setStatus(choice)}
                 options={[
                   { value: true, label: "Public" },
                   { value: false, label: "Hide" },
                 ]}
               />
             </UIBox>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormField
+              type="text"
+              label="firstLetter"
+              value={firstLetter}
+              onChange={(e) => setFirstLetter(e.target.value)}
+            />
           </Grid>
         </Grid>
       </UIBox>

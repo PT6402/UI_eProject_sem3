@@ -1,10 +1,18 @@
+/* eslint-disable react/prop-types */
 import PropTypes from "prop-types";
 import Icon from "@mui/material/Icon";
 import { UIBox } from "../../../../common";
 import colors from "assets/themes/private/base/colors";
 import borders from "assets/themes/private/base/borders";
 
-function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
+function DataTableHeadCell({
+  width,
+  children,
+  sorted,
+  align,
+  fontSize,
+  ...rest
+}) {
   const { light } = colors;
   const { borderWidth } = borders;
 
@@ -22,7 +30,7 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
         color="secondary"
         opacity={0.7}
         sx={({ typography: { size, fontWeightBold } }) => ({
-          fontSize: size.xxs,
+          fontSize: fontSize ? "fontSize" : size.xxs,
           fontWeight: fontWeightBold,
           textTransform: "uppercase",
           cursor: sorted && "pointer",

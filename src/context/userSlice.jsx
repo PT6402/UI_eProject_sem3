@@ -20,6 +20,7 @@ const userSlice = createSlice({
       role: null,
       isVerified: false,
       accessToken: null,
+      tp_contract_id: null,
     },
   },
   reducers: {
@@ -28,7 +29,6 @@ const userSlice = createSlice({
     },
     set_info_user: (state, action) => {
       state.info_user = action.payload;
-      state.info_user.isVerified = true;
     },
     remove_info_user: (state) => {
       state.info_user = initUser;

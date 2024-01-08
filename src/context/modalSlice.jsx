@@ -6,6 +6,7 @@ const modalSlice = createSlice({
     status: false,
     type: null,
     value: null,
+    statusModal: false,
   },
   reducers: {
     setStatus: (state, action) => {
@@ -17,8 +18,12 @@ const modalSlice = createSlice({
     setValue: (state, action) => {
       state.value = action.payload;
     },
+    setStatusModal: (state) => {
+      state.statusModal = !state.statusModal;
+    },
   },
 });
 
-export const { setType, setStatus, setValue } = modalSlice.actions;
+export const { setType, setStatus, setValue, setStatusModal } =
+  modalSlice.actions;
 export default modalSlice.reducer;

@@ -4,10 +4,18 @@ import CreateAddressStore from "../components/pages/private/admin/Address_store/
 import DetailAddressStore from "../components/pages/private/admin/Address_store/Detail";
 import Connects from "../components/pages/private/admin/Connects";
 import Detail_Connect from "../components/pages/private/admin/Connects/Detail";
+import Coupon from "../components/pages/private/admin/Coupon";
+import Packages from "../components/pages/private/admin/Package";
+import Detail_Package from "../components/pages/private/admin/Package/Detail";
+import Product from "../components/pages/private/admin/Product";
+import Detail_Product from "../components/pages/private/admin/Product/Detail";
+import Supplier from "../components/pages/private/admin/Supplier";
 import { Employees } from "../components/pages/private/admin/Users";
 import Customers from "../components/pages/private/admin/Users/Customers";
 import Detail_customer from "../components/pages/private/admin/Users/Customers/Detail";
+import CreateEmployee from "../components/pages/private/admin/Users/Employees/Create";
 import Detail_employee from "../components/pages/private/admin/Users/Employees/Detail";
+import EditEmployee from "../components/pages/private/admin/Users/Employees/Edit";
 const AdminRoutes = [
   {
     index: true,
@@ -60,6 +68,18 @@ const AdminRoutes = [
         collapse: [
           //employee
           {
+            name: "create",
+            key: "create",
+            route: "/admin/users/employees/create/",
+            component: <CreateEmployee />,
+          },
+          {
+            name: "create",
+            key: "create",
+            route: "/admin/users/employees/edit/:id",
+            component: <EditEmployee />,
+          },
+          {
             name: "detail",
             key: "detail",
             route: "/admin/users/employees/:id",
@@ -69,23 +89,82 @@ const AdminRoutes = [
       },
     ],
   },
-  //[connect]
+
   {
     type: "collapse",
-    name: "Connects",
-    key: "connects",
+    name: "Services",
+    key: "services",
     icon: <Shop size="15px" />,
-    route: "/admin/connects",
-    component: <Connects />,
-    noCollapse: true,
+    collapse: [
+      {
+        name: "Connect Type",
+        key: "connect_type",
+        route: "/admin/services/connect_type",
+        component: <Connects />,
+        link: true,
+        collapse: [
+          {
+            name: "detail",
+            key: "detail",
+            route: "/admin/services/connect_type/:id",
+            component: <Detail_Connect />,
+          },
+        ],
+      },
+      {
+        name: "Package",
+        key: "package",
+        route: "/admin/services/package",
+        component: <Packages />,
+        link: true,
+        collapse: [
+          {
+            name: "detail",
+            key: "detail",
+            route: "/admin/services/package/:id",
+            component: <Detail_Package />,
+          },
+        ],
+      },
+    ],
   },
   {
-    name: "Connects",
-    key: "connects",
+    type: "collapse",
+    name: "Storage",
+    key: "storages",
     icon: <Shop size="15px" />,
-    route: "/admin/connects/:id",
-    component: <Detail_Connect />,
-    noCollapse: true,
+    collapse: [
+      {
+        name: "Products",
+        key: "product",
+        route: "/admin/storages/product",
+        component: <Product />,
+        link: true,
+        collapse: [
+          {
+            name: "detail",
+            key: "detail",
+            route: "/admin/storages/product/:id",
+            component: <Detail_Product />,
+          },
+        ],
+      },
+      {
+        name: "Supplier",
+        key: "supplier",
+        route: "/admin/storages/supplier",
+        component: <Supplier />,
+        link: true,
+        collapse: [
+          {
+            name: "detail",
+            key: "detail",
+            route: "/admin/storages/supplier/:id",
+            component: <Detail_Package />,
+          },
+        ],
+      },
+    ],
   },
 
   //[address-store]
@@ -111,6 +190,17 @@ const AdminRoutes = [
     route: "/admin/address-stores/create",
     noCollapse: true,
     component: <CreateAddressStore />,
+  },
+
+  //[coupon]
+  {
+    type: "collapse",
+    name: "Coupon",
+    key: "coupon",
+    icon: <Shop size="15px" />,
+    route: "/admin/coupon",
+    noCollapse: true,
+    component: <Coupon />,
   },
 ];
 export default AdminRoutes;

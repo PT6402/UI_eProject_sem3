@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
 import { DefaultCell } from "../../../../../models";
 import { UIButton } from "../../../../../common";
+import { dataApiUser } from "../data";
 const data = {
   columns: [
     {
@@ -15,35 +15,72 @@ const data = {
       Cell: ({ value }) => <DefaultCell value={value} />,
     },
     {
+      Header: "email",
+      accessor: "email",
+      Cell: ({ value }) => <DefaultCell value={value} />,
+    },
+    {
       Header: "Action",
       accessor: "id",
-      Cell: ({ value }) => (
-        <Link to={`/admin/users/customers/${value}`}>
-          <UIButton color="info" size="small">
-            Edit
-          </UIButton>
-        </Link>
-      ),
+      Cell: ({ value }) => {
+        const handleSubmit = () => {
+          const data = { user_id: value };
+          console.log(data);
+        };
+        return (
+          <>
+            <UIButton color="info">Detail</UIButton>
+            <UIButton
+              color="error"
+              onClick={handleSubmit}
+              sx={() => ({ margin: "0 1rem" })}>
+              Block
+            </UIButton>
+          </>
+        );
+      },
     },
   ],
 
-  rows: [
-    {
-      id: "1",
-      fullName: "Trần Văn Phát",
-      phone: "0971866177",
-    },
-    {
-      id: "2",
-      fullName: "Trần Thiện Hiếu",
-      phone: "0971866177",
-    },
-    {
-      id: "3",
-      fullName: "Nguyễn Văn Thiện",
-      phone: "0971866177",
-    },
-  ],
+  rows: dataApiUser.users,
 };
-
+const columns = [
+  {
+    Header: "fullname",
+    accessor: "fullName",
+    Cell: ({ value }) => <DefaultCell value={value} />,
+  },
+  {
+    Header: "phone",
+    accessor: "phone",
+    Cell: ({ value }) => <DefaultCell value={value} />,
+  },
+  {
+    Header: "email",
+    accessor: "email",
+    Cell: ({ value }) => <DefaultCell value={value} />,
+  },
+  {
+    Header: "Action",
+    accessor: "id",
+    Cell: ({ value }) => {
+      const handleSubmit = () => {
+        const data = { user_id: value };
+        console.log(data);
+      };
+      return (
+        <>
+          <UIButton color="info">Detail</UIButton>
+          <UIButton
+            color="error"
+            onClick={handleSubmit}
+            sx={() => ({ margin: "0 1rem" })}>
+            Block
+          </UIButton>
+        </>
+      );
+    },
+  },
+];
 export default data;
+export { columns };

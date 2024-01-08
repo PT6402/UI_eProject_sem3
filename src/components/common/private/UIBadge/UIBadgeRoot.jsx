@@ -8,10 +8,12 @@ const UIBadgeRoot = styled(Badge)(({ theme, ownerState }) => {
     circular,
     border,
     size,
+    colorCus,
     indicator,
     variant,
     container,
     children,
+    paddingCus,
   } = ownerState;
 
   const { white, dark, gradients, badgeColors } = palette;
@@ -28,7 +30,7 @@ const UIBadgeRoot = styled(Badge)(({ theme, ownerState }) => {
   };
 
   // fontSize value
-  const fontSizeValue = size === "xs" ? fontSize.xxs : fontSize.xs;
+  const fontSizeValue = size === "xs" ? fontSize.xxs : size;
 
   // border value
   const borderValue = border ? `${borderWidth[3]} solid ${white.main}` : "none";
@@ -113,7 +115,7 @@ const UIBadgeRoot = styled(Badge)(({ theme, ownerState }) => {
   return {
     "& .MuiBadge-badge": {
       height: "auto",
-      padding: paddings[size] || paddings.xs,
+      // padding: paddings[size] || paddings.xs,
       fontSize: fontSizeValue,
       fontWeight: fontWeightBold,
       textTransform: "uppercase",
@@ -128,6 +130,8 @@ const UIBadgeRoot = styled(Badge)(({ theme, ownerState }) => {
       ...(variant === "contained" && containedStyles(color)),
       ...(!children && !container && standAloneStyles(color)),
       ...(container && containerStyles(color)),
+      color: colorCus,
+      padding: paddingCus,
     },
   };
 });
