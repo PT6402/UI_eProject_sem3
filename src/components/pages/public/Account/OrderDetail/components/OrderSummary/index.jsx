@@ -73,7 +73,7 @@ function OrderSummary({ packagePrice, deposit, coupon, tax, totalPrice }) {
             variant="body2"
             fontWeight="medium"
             sx={{ fontSize: "1.3rem" }}>
-            ${tax}
+            12.24%
           </UITypography>
         </UIBox>
       </UIBox>

@@ -34,13 +34,14 @@ export default function OnlinePayment() {
       });
   };
   useEffect(() => {
-    CheckPhone(phoneInputRef);
     const check = CheckPhone(phoneInputRef);
     if (check.error == null) {
       handleSubmit();
     } else {
-      Swal.fire("Error!", "not found", "error");
-      setDataContract(null);
+      if (!debouncedValue == "") {
+        Swal.fire("Error!", "not found", "error");
+        setDataContract(null);
+      }
     }
   }, [debouncedValue]);
 

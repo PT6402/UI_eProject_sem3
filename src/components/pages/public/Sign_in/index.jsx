@@ -8,6 +8,7 @@ import Forgot_pass from "../Forgot_pass";
 import { useAuth } from "../../../../hooks/useAuth";
 import useSendOTP from "../../../../hooks/useSendOTP";
 import CheckAccountPhone, {
+  CheckPhone,
   ConvertToInternationalPhoneNumber,
 } from "../../../../helpers/CheckAccountPhone";
 import { useToast } from "../../../../hooks/useToast";
@@ -28,15 +29,33 @@ export default function SignIn() {
   const dispatch = useDispatch();
   const [otpServer, setOtpServer] = useState(null);
   const [statusFormPass, setForm] = useState({ password: false, otp: false });
-  const handleLogin = async (result) => {
-    const data = {
-      account_phone: acc_phoneInput.current.value,
-      otp_pass: otp_passInput.current.value,
-      type: result.type,
-      otp: statusOTP.status,
-    };
-    await login(data);
-    setNotify(true);
+  const handleLogin = async () => {
+    const { result } = CheckAccountPhone(acc_phoneInput);
+    if (result.type == "account") {
+      const check = await checkAccount({
+        account_phone: acc_phoneInput.current.value,
+        type: result.type,
+      });
+      const data = {
+        account_phone: check,
+        otp_pass: otp_passInput.current.value,
+        type: result.type,
+        otp: statusOTP.status,
+      };
+      await login(data);
+      console.log(data);
+      setNotify(true);
+    } else {
+      const data = {
+        account_phone: acc_phoneInput.current.value,
+        otp_pass: otp_passInput.current.value,
+        type: result.type,
+        otp: statusOTP.status,
+      };
+      await login(data);
+      console.log(data);
+      setNotify(true);
+    }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -130,14 +149,12 @@ export default function SignIn() {
         }
         //get phone from server by account
         let statusSend = await handleSendSMS(
-          ConvertToInternationalPhoneNumber(acc_phoneInput.current.value)
+          ConvertToInternationalPhoneNumber(check)
         );
         if (statusSend) {
           setStatusOTP({ status: true, isSending: false });
         } else {
-          await verifyPhoneServer(acc_phoneInput.current.value).then((res) =>
-            setOtpServer(res)
-          );
+          await verifyPhoneServer(check).then((res) => setOtpServer(res));
           setStatusOTP({ status: true, isSending: false });
         }
       }

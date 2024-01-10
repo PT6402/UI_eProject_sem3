@@ -88,7 +88,7 @@ const columns = [
         <>
           {titleButton == "Processing" && (
             <UIButton color="info" onClick={handleSubmit}>
-              Confirme
+              Confirm
             </UIButton>
           )}
           {titleButton == "Confirmed" && (

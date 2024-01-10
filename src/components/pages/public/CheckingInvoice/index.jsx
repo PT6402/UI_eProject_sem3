@@ -39,10 +39,11 @@ export default function CheckingInvoice() {
   };
   const handleSubmit = async ({ to, from }) => {
     const data = {
-      fromDate: to,
-      toDate: from,
+      fromDate: from,
+      toDate: to,
       user_Id: info_user.userId,
     };
+    // console.log(data);
     const url = "http://localhost:8000/checkinvoice";
     await axiosAuthentication.post(url, data).then((res) => {
       if (res.status == 200) {

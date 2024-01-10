@@ -36,6 +36,7 @@ export default function CheckAccountPhone(acc_phoneInput) {
       }
     }
   }
+
   return { error, result };
 }
 
@@ -68,5 +69,6 @@ export function CheckPhone(acc_phoneInput) {
       }
     }
   }
+
   return { error, result };
 }

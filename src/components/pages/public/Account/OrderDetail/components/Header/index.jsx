@@ -74,6 +74,11 @@ function Header({ order_id, createDate, status, handlePayment }) {
           {status}
         </UIButton>
       )}
+      {status == "Processing" && (
+        <UIButton variant="outlined" color="error" sx={{ fontSize: "1.3rem" }}>
+          {status}
+        </UIButton>
+      )}
       {status == "Paid" && (
         <UIButton variant="outlined" color="error" sx={{ fontSize: "1.3rem" }}>
           Installing..

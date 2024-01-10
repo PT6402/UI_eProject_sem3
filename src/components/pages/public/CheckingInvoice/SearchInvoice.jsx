@@ -30,13 +30,13 @@ export default function SearchInvoice({ handleSubmit }) {
                 component="p"
                 fontWeight="bold"
                 sx={{ whiteSpace: "nowrap" }}>
-                To date:
+                From date:
               </UITypography>
               <UIInput
                 type={"datetime-local"}
                 size={"uipublic"}
-                value={to}
-                onChange={(e) => setTo(e.target.value)}
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
               />
             </UIBox>
             <UIBox
@@ -53,14 +53,21 @@ export default function SearchInvoice({ handleSubmit }) {
                 component="p"
                 fontWeight="bold"
                 sx={{ whiteSpace: "nowrap" }}>
-                From date:
+                To date:
               </UITypography>
               <UIInput
                 type={"datetime-local"}
                 size={"uipublic"}
-                value={from}
-                onChange={(e) => setFrom(e.target.value)}
+                value={to}
+                max="2024-12-01T23:59"
+                onChange={(e) => setTo(e.target.value)}
               />
+              {/* <input
+                type="datetime-local"
+                max="YYYY-MM-DDT23:59"
+                onChange={(e) => setFrom(e.target.value)}
+                value={from}
+              /> */}
             </UIBox>
           </Card>
         </Grid>

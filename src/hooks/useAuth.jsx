@@ -91,6 +91,7 @@ export function useAuth() {
     setError(null);
     setIsLoading(true);
     try {
+      // console.log(account_phone, type);
       return await axiosAuthentication
         .post("http://localhost:8000/check-account", {
           accountPhone: account_phone,
