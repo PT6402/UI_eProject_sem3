@@ -10,6 +10,7 @@ import {
 import { useAddressStore } from "../../../../../hooks/useAddressStore";
 import { useDispatch } from "react-redux";
 import { setStatusModal } from "../../../../../context/modalSlice";
+import Swal from "sweetalert2";
 
 const convertStringToArray = (stringCode) => {
   let listCode = stringCode.split("-").map((item) => Number(item));
@@ -90,10 +91,34 @@ const columns = [
     accessor: "id",
     Cell: ({ value }) => {
       const { handleDelete } = useAddressStore();
+      const showAlert = async () => {
+        const newSwal = Swal.mixin({
+          customClass: {
+            confirmButton: "button button-success",
+            cancelButton: "button button-error",
+          },
+          buttonsStyling: false,
+        });
+
+        return newSwal
+          .fire({
+            title: "Are you sure?",
+            text: "You want delete address store!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete!",
+          })
+          .then(async (result) => {
+            if (result.isConfirmed) {
+              await handleDelete({ id: value });
+              dispatch(setStatusModal());
+              return Swal.fire("Delete!", "Your has been delete.", "success");
+            }
+          });
+      };
       const dispatch = useDispatch();
       const handleDel = async () => {
-        await handleDelete({ id: value });
-        dispatch(setStatusModal());
+        await showAlert();
       };
       return (
         <>

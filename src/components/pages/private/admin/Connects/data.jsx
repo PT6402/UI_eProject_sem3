@@ -34,10 +34,10 @@ const data = {
           dispatch(setType(Detail_Connect));
           dispatch(setValue(value));
         };
-        const handleDelete = () => {
-          const data = { connect_type_id: value };
-          console.log(data);
-        };
+        // const handleDelete = () => {
+        //   const data = { connect_type_id: value };
+        //   console.log(data);
+        // };
         return (
           <>
             <UIButton
@@ -47,9 +47,9 @@ const data = {
               sx={() => ({ margin: "0 1rem" })}>
               Edit
             </UIButton>
-            <UIButton color="error" onClick={handleDelete}>
+            {/* <UIButton color="error" onClick={handleDelete}>
               Delete
-            </UIButton>
+            </UIButton> */}
           </>
         );
       },
@@ -93,9 +93,9 @@ const columns = [
             sx={() => ({ margin: "0 1rem" })}>
             Edit
           </UIButton>
-          <UIButton color="error" onClick={handleDel}>
+          {/* <UIButton color="error" onClick={handleDel}>
             Delete
-          </UIButton>
+          </UIButton> */}
         </>
       );
     },

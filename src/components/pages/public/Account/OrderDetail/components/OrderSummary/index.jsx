@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { UIBox, UITypography } from "../../../../../../common";
 
 function OrderSummary({ packagePrice, deposit, coupon, tax, totalPrice }) {
@@ -55,7 +56,7 @@ function OrderSummary({ packagePrice, deposit, coupon, tax, totalPrice }) {
             variant="body2"
             fontWeight="medium"
             sx={{ fontSize: "1.3rem" }}>
-            ${coupon}
+            - ${(deposit * coupon) / 100}
           </UITypography>
         </UIBox>
       </UIBox>

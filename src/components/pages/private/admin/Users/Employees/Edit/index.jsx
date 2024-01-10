@@ -8,14 +8,12 @@ import Confirm from "./componentStep/Confirm";
 import { useDispatch, useSelector } from "react-redux";
 import { setValue } from "../../../../../../../context/dataFormStep";
 import { useNavigate, useParams } from "react-router-dom";
-import { dataApiUser, setDefaultRole } from "../../data";
-import {
-  convertCodeToRegion,
-  dataApiAddress,
-} from "../../../Address_store/data";
+import { setDefaultRole } from "../../data";
+import { convertCodeToRegion } from "../../../Address_store/data";
 import { axiosAuthentication } from "../../../../../../../../http";
 import { useEmployee } from "../../../../../../../hooks/useEmployee";
 import { useAddressStore } from "../../../../../../../hooks/useAddressStore";
+import Swal from "sweetalert2";
 
 export default function EditEmployee() {
   useEffect(() => {
@@ -101,7 +99,8 @@ export default function EditEmployee() {
     };
     // setData((prev) => ({...prev,address_store_id}))
   };
-
+  const showAlert = async () =>
+    Swal.fire("Good job!", "You updated this employee!", "success");
   const handleSubmit = async () => {
     const data = {
       id: Id,
@@ -111,8 +110,7 @@ export default function EditEmployee() {
       fullName: dataFormStep.value.fullName,
       employee_type_id: dataFormStep.value.employee_type.id,
     };
-
-    await update({ data });
+    await update({ data }).then(async () => await showAlert());
     navigate("/admin/users/employees/list");
     dispatch(setValue({}));
   };

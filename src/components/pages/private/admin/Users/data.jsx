@@ -7,6 +7,7 @@ import { dataApiAddress } from "../Address_store/data";
 import { useDispatch } from "react-redux";
 import { useEmployee } from "../../../../../hooks/useEmployee";
 import { setStatusModal } from "../../../../../context/modalSlice";
+import Swal from "sweetalert2";
 
 const setDefaultRole = ({ idType, employee_types }) => {
   return employee_types.find(({ id }) => id == idType);
@@ -38,11 +39,35 @@ const handleTable = ({ filterRole, employees, addresses, employee_types }) => {
       Header: "Action",
       accessor: "id",
       Cell: ({ value }) => {
+        const showAlert = async () => {
+          const newSwal = Swal.mixin({
+            customClass: {
+              confirmButton: "button button-success",
+              cancelButton: "button button-error",
+            },
+            buttonsStyling: false,
+          });
+
+          return newSwal
+            .fire({
+              title: "Are you sure?",
+              text: "You want delete employee!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonText: "Yes, delete!",
+            })
+            .then(async (result) => {
+              if (result.isConfirmed) {
+                await handleDelete({ id: value });
+                dispatch(setStatusModal());
+                return Swal.fire("Delete!", "Your has been delete.", "success");
+              }
+            });
+        };
         const dispatch = useDispatch();
         const { handleDelete } = useEmployee();
         const handleDel = async () => {
-          await handleDelete({ id: value });
-          dispatch(setStatusModal());
+          await showAlert();
         };
 
         return (

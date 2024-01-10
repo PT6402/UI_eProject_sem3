@@ -21,35 +21,34 @@ export default function Navbar({ toggleSideNav }) {
   const dispatch = useDispatch();
   const [hasScrolled, setHasSrolled] = useState(false);
   const resizeHeaderOnScroll = () => {
-    if (pathname != "/account") {
-      setHasSrolled((hasScrolled) => {
-        if (
-          !hasScrolled &&
-          (document.body.scrollTop > 20 ||
-            document.documentElement.scrollTop > 20)
-        ) {
-          return true;
-        }
+    // if (pathname != "/account") {
+    setHasSrolled((hasScrolled) => {
+      if (
+        !hasScrolled &&
+        (document.body.scrollTop > 20 ||
+          document.documentElement.scrollTop > 20)
+      ) {
+        return true;
+      }
 
-        if (
-          hasScrolled &&
-          document.body.scrollTop < 4 &&
-          document.documentElement.scrollTop < 4
-        ) {
-          return false;
-        }
+      if (
+        hasScrolled &&
+        document.body.scrollTop < 4 &&
+        document.documentElement.scrollTop < 4
+      ) {
+        return false;
+      }
 
-        return hasScrolled;
-      });
-    }
+      return hasScrolled;
+    });
+    // }
   };
 
   useEffect(() => {
-    if (pathname != "/account") {
-      window.addEventListener("scroll", resizeHeaderOnScroll);
-
-      return () => window.removeEventListener("scroll", resizeHeaderOnScroll);
-    }
+    // if (pathname != "/account") {
+    window.addEventListener("scroll", resizeHeaderOnScroll);
+    return () => window.removeEventListener("scroll", resizeHeaderOnScroll);
+    // }
   }, [pathname]);
 
   const handleOpenLoginModal = (type) => {
@@ -66,50 +65,48 @@ export default function Navbar({ toggleSideNav }) {
     : styles.nav;
   return (
     <nav className={navStyles}>
-      {pathname != "/account" && (
-        <div className={styles.container_top}>
-          {!info_user.isVerified && (
-            <>
-              <Button
-                className={`${styles.button_outline}`}
-                onClick={() => handleOpenLoginModal("login")}>
-                Login
-              </Button>
-              <Button
-                className={`${styles.button_full}`}
-                onClick={() => handleOpenLoginModal("sign-up")}>
-                Sign Up
-              </Button>
-            </>
-          )}
-          {info_user.isVerified && (
-            <Link
-              to="/account"
-              className={`${styles.link} ${styles.login_link}`}>
-              My Account
-            </Link>
-          )}
-          {info_user.isVerified && info_user.role == "admin" && (
-            <Link to="/admin" className={`${styles.link} ${styles.login_link}`}>
-              Admin
-            </Link>
-          )}
-          {info_user.isVerified && info_user.role == "Emp_Sale" && (
-            <Link
-              to="/employee_sale"
-              className={`${styles.link} ${styles.login_link}`}>
-              Employee Sale
-            </Link>
-          )}
-          {info_user.isVerified && info_user.role == "Emp_Technician" && (
-            <Link
-              to="/employee_tech"
-              className={`${styles.link} ${styles.login_link}`}>
-              Technician
-            </Link>
-          )}
-        </div>
-      )}
+      {/* {pathname != "/account" && ( */}
+      <div className={styles.container_top}>
+        {!info_user.isVerified && (
+          <>
+            <Button
+              className={`${styles.button_outline}`}
+              onClick={() => handleOpenLoginModal("login")}>
+              Login
+            </Button>
+            <Button
+              className={`${styles.button_full}`}
+              onClick={() => handleOpenLoginModal("sign-up")}>
+              Sign Up
+            </Button>
+          </>
+        )}
+        {info_user.isVerified && (
+          <Link to="/account" className={`${styles.link} ${styles.login_link}`}>
+            My Account
+          </Link>
+        )}
+        {info_user.isVerified && info_user.role == "admin" && (
+          <Link to="/admin" className={`${styles.link} ${styles.login_link}`}>
+            Admin
+          </Link>
+        )}
+        {info_user.isVerified && info_user.role == "Emp_Sale" && (
+          <Link
+            to="/employee_sale"
+            className={`${styles.link} ${styles.login_link}`}>
+            Employee Sale
+          </Link>
+        )}
+        {info_user.isVerified && info_user.role == "Emp_Technician" && (
+          <Link
+            to="/employee_tech"
+            className={`${styles.link} ${styles.login_link}`}>
+            Technician
+          </Link>
+        )}
+      </div>
+      {/* )} */}
       <div className={styles.container_bottom}>
         <Link to="/">
           {/* <img className={styles.logo} src={LogoNav} alt="Logo Nav" /> */}

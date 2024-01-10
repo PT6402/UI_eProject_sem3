@@ -8,6 +8,7 @@ export default function Profile() {
       <UIBox mb={3}>
         <Info />
       </UIBox>
+
       <UIBox mb={3}>
         <ChangePassword />
       </UIBox>

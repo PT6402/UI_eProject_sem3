@@ -3,6 +3,7 @@ import { UIBox, UIButton } from "../../../../../common";
 import { Card, Grid } from "@mui/material";
 import FormEditAddressStore from "./FormEditAddressStore";
 import { useAddressStore } from "../../../../../../hooks/useAddressStore";
+import Swal from "sweetalert2";
 
 export default function DetailAddressStore() {
   const { update, isLoading } = useAddressStore();
@@ -25,9 +26,12 @@ export default function DetailAddressStore() {
       id: id,
     };
   };
+  const showAlert = async () =>
+    Swal.fire("Success!", "You update address store!", "success");
   const handleSubmit = async () => {
     await update({ data });
     navigate("/admin/address-stores");
+    showAlert();
   };
   return (
     <>

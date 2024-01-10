@@ -54,6 +54,7 @@
     "regenerator-runtime": "^0.14.1",
     "sass": "^1.69.5",
     "stripe": "^14.11.0",
+    "sweetalert2": "^11.10.2",
     "swiper": "^8.4.6",
     "three": "^0.159.0",
     "use-debounce": "^10.0.0",

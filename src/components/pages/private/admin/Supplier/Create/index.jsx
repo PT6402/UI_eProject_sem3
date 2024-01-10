@@ -9,6 +9,7 @@ import {
   setType,
 } from "../../../../../../context/modalSlice";
 import { setValue } from "../../../../../../context/dataAdmin";
+import Swal from "sweetalert2";
 
 export default function CreateSupplier() {
   const dispatch = useDispatch();
@@ -17,12 +18,15 @@ export default function CreateSupplier() {
   const handleGetData = ({ brandName, phone, address }) => {
     getData = { brandName, phone, address };
   };
+  const showAlert = async () =>
+    Swal.fire("Success!", "You create supplier!", "success");
   const handleSubmit = async () => {
     await create({ data: getData });
     dispatch(setStatusModal());
     dispatch(setStatus(false));
     dispatch(setType(null));
     dispatch(setValue(null));
+    showAlert();
   };
   return (
     <UIBox mt={1}>

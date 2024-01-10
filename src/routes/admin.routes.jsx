@@ -5,6 +5,7 @@ import DetailAddressStore from "../components/pages/private/admin/Address_store/
 import Connects from "../components/pages/private/admin/Connects";
 import Detail_Connect from "../components/pages/private/admin/Connects/Detail";
 import Coupon from "../components/pages/private/admin/Coupon";
+import FeedBack from "../components/pages/private/admin/Feedback";
 import Packages from "../components/pages/private/admin/Package";
 import Detail_Package from "../components/pages/private/admin/Package/Detail";
 import Product from "../components/pages/private/admin/Product";
@@ -201,6 +202,15 @@ const AdminRoutes = [
     route: "/admin/coupon",
     noCollapse: true,
     component: <Coupon />,
+  },
+  {
+    type: "collapse",
+    name: "Feedback",
+    key: "feedback",
+    icon: <Shop size="15px" />,
+    route: "/admin/feedback",
+    noCollapse: true,
+    component: <FeedBack />,
   },
 ];
 export default AdminRoutes;

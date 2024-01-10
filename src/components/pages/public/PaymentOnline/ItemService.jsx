@@ -8,18 +8,24 @@ export default function ItemService({
   duration,
   packages,
   price,
+  id,
+  handleGetIdService,
+  selectService,
+  orderId,
 }) {
   return (
     <Card
       sx={{
         boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
         transition: "transform 0.2s ease-in-out",
-        "&:hover": {
-          transform: "scale(1.05)",
-        },
+        // "&:hover": {
+        //   transform: "scale(1.05)",
+        // },
+        transform: selectService == id ? "scale(1.05)" : "",
+        border: selectService == id ? ".2rem solid grey" : "",
         cursor: "pointer",
       }}>
-      <UIBox variant="gradient">
+      <UIBox variant="gradient" onClick={() => handleGetIdService(id, orderId)}>
         <UIBox p={2}>
           <Grid container alignItems="center">
             <Grid item xs={8}>

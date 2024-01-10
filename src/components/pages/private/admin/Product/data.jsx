@@ -13,6 +13,7 @@ import { dataApiSupplier } from "../Supplier/data";
 import { dataApi } from "../Package/data";
 import { axiosAuthentication } from "../../../../../../http";
 import { useProduct } from "../../../../../hooks/useProduct";
+import Swal from "sweetalert2";
 const dataApiProduct = [
   {
     id: 1,
@@ -107,10 +108,8 @@ const data = {
           dispatch(setType(Detail_Product));
           dispatch(setValue(value));
         };
-        const { handleDelete } = useProduct();
         const handleDel = async () => {
-          await handleDelete({ id: value });
-          dispatch(setStatusModal());
+          await showAlert();
         };
         return (
           <>
@@ -158,16 +157,41 @@ const columns = [
     Header: "Action",
     accessor: "id",
     Cell: ({ value }) => {
+      const { handleDelete } = useProduct();
+      const showAlert = async () => {
+        const newSwal = Swal.mixin({
+          customClass: {
+            confirmButton: "button button-success",
+            cancelButton: "button button-error",
+          },
+          buttonsStyling: false,
+        });
+
+        return newSwal
+          .fire({
+            title: "Are you sure?",
+            text: "You want delete product!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete!",
+          })
+          .then(async (result) => {
+            if (result.isConfirmed) {
+              await handleDelete({ id: value });
+              dispatch(setStatusModal());
+              return Swal.fire("Delete!", "Your has been delete.", "success");
+            }
+          });
+      };
       const dispatch = useDispatch();
       const handleChangeModal = () => {
         dispatch(setStatus(true));
         dispatch(setType(Detail_Product));
         dispatch(setValue(value));
       };
-      const { handleDelete } = useProduct();
+
       const handleDel = async () => {
-        await handleDelete({ id: value });
-        dispatch(setStatusModal());
+        await showAlert();
       };
       return (
         <>

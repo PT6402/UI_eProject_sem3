@@ -12,6 +12,7 @@ import {
 import Form_Duration from "./Detail";
 import Form_CallCharge from "./Detail_Charge";
 import { usePackage } from "../../../../../hooks/usePackage";
+import Swal from "sweetalert2";
 
 export const handleGenTableDuration = ({ packageId, durations }) => {
   const rows = durations.filter(({ package_id }) => package_id == packageId);
@@ -47,10 +48,33 @@ export const handleGenTableDuration = ({ packageId, durations }) => {
           dispatch(setType(Form_CallCharge));
           dispatch(setValue(value));
         };
+        const showAlert = async () => {
+          const newSwal = Swal.mixin({
+            customClass: {
+              confirmButton: "button button-success",
+              cancelButton: "button button-error",
+            },
+            buttonsStyling: false,
+          });
 
+          return newSwal
+            .fire({
+              title: "Are you sure?",
+              text: "You want delete duration!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonText: "Yes, delete!",
+            })
+            .then(async (result) => {
+              if (result.isConfirmed) {
+                await handleDeleteDuration({ id: value });
+                dispatch(setStatusModal());
+                return Swal.fire("Delete!", "Your has been delete.", "success");
+              }
+            });
+        };
         const handleSubmitDelete = async () => {
-          await handleDeleteDuration({ id: value });
-          dispatch(setStatusModal());
+          await showAlert();
         };
 
         return (

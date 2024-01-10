@@ -16,6 +16,7 @@ import {
   setValue,
 } from "../../../../../context/modalSlice";
 import { setCurrentConnect } from "../../../../../context/packageSlice";
+import Swal from "sweetalert2";
 
 export default function CreatePackage() {
   const modalType = useSelector((state) => state.modalType);
@@ -54,7 +55,8 @@ export default function CreatePackage() {
   useEffect(() => {
     handleDataForm();
   }, [connect_typess]);
-
+  const showAlert = async () =>
+    Swal.fire("Success!", "You create package!", "success");
   const handleSubmit = async () => {
     const data = {
       namePackage: name,
@@ -66,6 +68,7 @@ export default function CreatePackage() {
     dispatch(setType(null));
     dispatch(setValue(null));
     dispatch(setCurrentConnect(connectType.value - 1));
+    showAlert();
   };
   return (
     <>

@@ -11,6 +11,7 @@ import {
   setType,
   setValue,
 } from "../../../../../../context/modalSlice";
+import Swal from "sweetalert2";
 
 export default function CreateProduct() {
   const dispatch = useDispatch();
@@ -59,6 +60,8 @@ export default function CreateProduct() {
   const handleGetData = ({ name, numbConnect, connectType, supplier }) => {
     getData = { name, numbConnect, connectType, supplier };
   };
+  const showAlert = async () =>
+    Swal.fire("Success!", "You create product!", "success");
   const handleSubmit = async () => {
     const data = {
       name: `${getData.name}`,
@@ -71,6 +74,7 @@ export default function CreateProduct() {
     dispatch(setStatus(false));
     dispatch(setType(null));
     dispatch(setValue(null));
+    showAlert();
   };
   return (
     <>

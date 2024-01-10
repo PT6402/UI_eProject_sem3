@@ -9,7 +9,9 @@ import { columns } from "./data";
 import { Card } from "@mui/material";
 import { axiosAuthentication } from "../../../../../http";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 export default function CheckingInvoice() {
+  const info_user = useSelector((state) => state.user.info_user);
   const [dataInvoice, setInvoice] = useState(null);
   const [rows, setRows] = useState(null);
   function formatNgayThangNam(chuoiNgay) {
@@ -39,6 +41,7 @@ export default function CheckingInvoice() {
     const data = {
       fromDate: to,
       toDate: from,
+      user_Id: info_user.userId,
     };
     const url = "http://localhost:8000/checkinvoice";
     await axiosAuthentication.post(url, data).then((res) => {

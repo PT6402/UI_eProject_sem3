@@ -1,7 +1,76 @@
 import { Card, Grid } from "@mui/material";
 import { UIBox, UIButton, UITypography } from "../../../../common";
 import styles from "./index.module.scss";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useToast } from "../../../../../hooks/useToast";
+import { useAuth } from "../../../../../hooks/useAuth";
+import Swal from "sweetalert2";
 export default function ChangePassword() {
+  const info_user = useSelector((state) => state.user.info_user);
+  const [currentPass, setCurrentPass] = useState();
+  const [newPass, setNewPass] = useState();
+  const [confirmPass, setConfirmPass] = useState();
+  const { changePass, error } = useAuth();
+  const [notify, setNotify] = useState(false);
+  const { sendToast } = useToast();
+
+  const showSurvey = async () => {
+    const newSwal = Swal.mixin({
+      customClass: {
+        confirmButton: "button button-success",
+        cancelButton: "button button-error",
+      },
+      buttonsStyling: false,
+    });
+
+    newSwal
+      .fire({
+        title: "You want change password?",
+        // text: "Success click check product",
+        icon: "warning",
+        showCancelButton: true,
+        buttonsStyling: true,
+        confirmButtonText: "Update",
+        cancelButtonText: "No",
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const data = {
+            info_user: info_user.userId,
+            currentPass: currentPass,
+            newPass: newPass,
+            confirmPass: confirmPass,
+          };
+          await changePass({ data }).then(() => {
+            setConfirmPass("");
+            setCurrentPass("");
+            setNewPass("");
+            return;
+          });
+          setNotify(true);
+        } else {
+          setNewPass("");
+          setCurrentPass("");
+          setConfirmPass("");
+        }
+      });
+  };
+
+  const handleChangePass = async () => {
+    await showSurvey();
+  };
+  useEffect(() => {
+    if (notify) {
+      if (error) {
+        Swal.fire("Error!", error, "error");
+        setNotify(false);
+      } else {
+        Swal.fire("Success!", "Your password has been updated.", "success");
+        setNotify(false);
+      }
+    }
+  }, [notify]);
   return (
     <Card sx={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}>
       <UIBox p={3}>
@@ -16,9 +85,11 @@ export default function ChangePassword() {
               <span>Current password:</span>
               <input
                 className={styles.input}
-                type="passowrd"
+                type="password"
                 placeholder="Current password"
                 required
+                onChange={(e) => setCurrentPass(e.target.value)}
+                value={currentPass}
               />
             </label>
           </Grid>
@@ -27,20 +98,24 @@ export default function ChangePassword() {
               <span>New password:</span>
               <input
                 className={styles.input}
-                type="passowrd"
+                type="password"
                 placeholder="new password"
                 required
+                onChange={(e) => setNewPass(e.target.value)}
+                value={newPass}
               />
             </label>
           </Grid>
           <Grid item xs={12}>
             <label className={styles.label}>
-              <span>Phone:</span>
+              <span>Confirm password:</span>
               <input
                 className={styles.input}
-                type="passowrd"
+                type="password"
                 placeholder="Confirm Password"
                 required
+                onChange={(e) => setConfirmPass(e.target.value)}
+                value={confirmPass}
               />
             </label>
           </Grid>
@@ -70,7 +145,8 @@ export default function ChangePassword() {
                   color: "#fff",
                   borderColor: "#000",
                 },
-              }}>
+              }}
+              onClick={handleChangePass}>
               update password
             </UIButton>
           </UIBox>

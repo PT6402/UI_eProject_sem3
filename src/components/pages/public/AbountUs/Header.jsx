@@ -1,6 +1,4 @@
-import React from "react";
 import { UIBox, UITypography } from "../../../common";
-import curved0 from "assets/images/private/curved-images/curved0.jpg";
 import { Card, Grid } from "@mui/material";
 export default function Header() {
   const curved0 =
@@ -14,10 +12,7 @@ export default function Header() {
         minHeight="50rem"
         borderRadius="xxl"
         sx={{
-          backgroundImage: ({
-            functions: { rgba, linearGradient },
-            palette: { gradients },
-          }) => `url(${curved0})`,
+          backgroundImage: `url(${curved0})`,
           backgroundSize: "cover",
           backgroundPosition: "50%",
           overflow: "hidden",

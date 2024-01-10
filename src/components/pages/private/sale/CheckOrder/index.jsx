@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { UIBox, UIButton } from "../../../../common";
+import { UIBox } from "../../../../common";
 import { DataTable } from "../../../../models";
-import { columns, rows } from "./data";
+import { columns } from "./data";
 import { axiosAuthentication } from "../../../../../../http";
+import { useDispatch, useSelector } from "react-redux";
+import { setValue } from "../../../../../context/employeeSlice";
 export default function CheckOrder() {
-  const [orderList, setOrderList] = useState({});
+  const [orderList, setOrderList] = useState(null);
+  const employeeSlice = useSelector((state) => state.employeeSlice);
+  const dispatch = useDispatch();
   function formatNgayThangNam(chuoiNgay) {
     let ngayGoc = new Date(chuoiNgay);
     let ngay = ngayGoc.getDate();
@@ -19,7 +23,7 @@ export default function CheckOrder() {
     return ngayMoiFormat;
   }
   const handleCallList = async () => {
-    const url = `http://localhost:8000/api/Staff?storeID=${1}&empID=${1}`;
+    const url = `http://localhost:8000/api/Staff?storeID=${3}&empID=${9}`;
     await axiosAuthentication.get(url).then((res) => {
       if (res.status == 200) {
         const reqdata = res.data.model;
@@ -28,13 +32,14 @@ export default function CheckOrder() {
           return item;
         });
         setOrderList(res.data.model);
+        dispatch(setValue(res.data.model));
       }
     });
   };
   useEffect(() => {
     handleCallList();
-  }, []);
-  console.log(orderList);
+  }, [employeeSlice.statusOrder]);
+  console.log(employeeSlice);
   return (
     <>
       {orderList != null && (

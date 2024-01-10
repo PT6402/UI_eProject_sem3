@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useConnect } from "../../../../../hooks/useConnect";
 import { setStatusModal } from "../../../../../context/modalSlice";
 import { setCurrentConnect } from "../../../../../context/packageSlice";
+import Swal from "sweetalert2";
 export default function Packages() {
   const dispatch = useDispatch();
   const currentConnectType = useSelector(
@@ -62,6 +63,33 @@ export default function Packages() {
   //     packages.filter(({ connect_type_id }) => connect_type_id == connect_id)
   //   );
   // };
+  const showEditPackage = async () =>
+    Swal.fire("Success!", "You edit package!", "success");
+  const showDeletePackage = async ({ id }) => {
+    const newSwal = Swal.mixin({
+      customClass: {
+        confirmButton: "button button-success",
+        cancelButton: "button button-error",
+      },
+      buttonsStyling: false,
+    });
+
+    return newSwal
+      .fire({
+        title: "Are you sure?",
+        text: "You want delete employee!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete!",
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          await handleDeletePackage({ id });
+          dispatch(setStatusModal());
+          return Swal.fire("Delete!", "Your has been delete.", "success");
+        }
+      });
+  };
   useEffect(() => {
     if (packages != null) {
       setIsOpen({ status: false, value: null });
@@ -86,11 +114,11 @@ export default function Packages() {
               const handleEdit = async ({ data }) => {
                 await update({ data });
                 checkIdReload = item.package_id == data.package_id;
+                showEditPackage();
               };
               const handleDelete = async ({ id }) => {
-                await handleDeletePackage({ id });
+                await showDeletePackage({ id });
                 checkIdReload = item.package_id == id;
-                dispatch(setStatusModal());
               };
               return (
                 <Card

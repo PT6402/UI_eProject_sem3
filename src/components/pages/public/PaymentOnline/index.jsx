@@ -9,6 +9,7 @@ import { useDebounce } from "use-debounce";
 import { CheckPhone } from "../../../../helpers/CheckAccountPhone";
 import axios from "axios";
 import { axiosAuthentication } from "../../../../../http";
+import Swal from "sweetalert2";
 
 export default function OnlinePayment() {
   const phoneInputRef = useRef();
@@ -23,10 +24,12 @@ export default function OnlinePayment() {
         if (res.status == 200) {
           setDataContract(res.data.model);
         } else {
+          Swal.fire("Error!", "not found", "error");
           setDataContract(null);
         }
       })
       .catch(() => {
+        Swal.fire("Error!", "not found", "error");
         setDataContract(null);
       });
   };
@@ -36,9 +39,11 @@ export default function OnlinePayment() {
     if (check.error == null) {
       handleSubmit();
     } else {
+      Swal.fire("Error!", "not found", "error");
       setDataContract(null);
     }
   }, [debouncedValue]);
+
   return (
     <>
       {

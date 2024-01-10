@@ -9,6 +9,7 @@ import {
   setType,
   setValue,
 } from "../../../../../../context/modalSlice";
+import Swal from "sweetalert2";
 
 export default function CreateCoupon() {
   const dispatch = useDispatch();
@@ -22,12 +23,15 @@ export default function CreateCoupon() {
       name,
     };
   };
+  const showAlert = async () =>
+    Swal.fire("Success!", "You create coupon!", "success");
   const handleSubmit = async () => {
     await create({ data: getData });
     dispatch(setStatusModal());
     dispatch(setStatus(false));
     dispatch(setType(null));
     dispatch(setValue(null));
+    showAlert();
   };
   return (
     <UIBox mt={1}>

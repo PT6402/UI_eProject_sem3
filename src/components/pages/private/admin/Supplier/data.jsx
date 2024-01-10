@@ -10,6 +10,7 @@ import {
 } from "../../../../../context/modalSlice";
 import Detail_Supplier from "./Detail";
 import { useSupplier } from "../../../../../hooks/useSupplier";
+import Swal from "sweetalert2";
 const dataApiSupplier = [
   {
     id: 1,
@@ -102,6 +103,31 @@ const columns = [
     accessor: "id",
     Cell: ({ value }) => {
       const { handleDelete } = useSupplier();
+      const showAlert = async () => {
+        const newSwal = Swal.mixin({
+          customClass: {
+            confirmButton: "button button-success",
+            cancelButton: "button button-error",
+          },
+          buttonsStyling: false,
+        });
+
+        return newSwal
+          .fire({
+            title: "Are you sure?",
+            text: "You want delete supplier!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete!",
+          })
+          .then(async (result) => {
+            if (result.isConfirmed) {
+              await handleDelete({ id: value });
+              dispatch(setStatusModal());
+              return Swal.fire("Delete!", "Your has been delete.", "success");
+            }
+          });
+      };
       const dispatch = useDispatch();
       const handleChangeModal = () => {
         dispatch(setStatus(true));
@@ -109,8 +135,7 @@ const columns = [
         dispatch(setValue(value));
       };
       const handleDel = async () => {
-        await handleDelete({ id: value });
-        dispatch(setStatusModal());
+        await showAlert();
       };
       return (
         <>

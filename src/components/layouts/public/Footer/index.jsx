@@ -56,8 +56,16 @@ export default function Footer() {
             </ul>
           </div>
         </div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.2766942773246!2d106.68116767508886!3d10.790107289359499!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528d33549cc91%3A0xb24c365a1b8651ac!2zMzkxIMSQLiBOYW0gS-G7syBLaOG7n2kgTmdoxKlhLCBQaMaw4budbmcgOCwgUXXhuq1uIDMsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1704888853248!5m2!1svi!2s"
+          width="200%"
+          height="450"
+          style={{ border: 0 }}
+          allowfullscreen=""
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"></iframe>
         <div className={styles.socials_wrapper}>
-          <div className={styles.socials}>
+          {/* <div className={styles.socials}>
             <a
               href="https://www.instagram.com"
               target="_blank"
@@ -76,7 +84,7 @@ export default function Footer() {
             <a href="https://youtube.com" target="_blank" rel="noreferrer">
               <FaYoutube />
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

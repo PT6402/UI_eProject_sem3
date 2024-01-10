@@ -10,6 +10,7 @@ import {
   setValue,
 } from "../../../../../../context/modalSlice";
 import { useConnect } from "../../../../../../hooks/useConnect";
+import Swal from "sweetalert2";
 
 export default function CreateConnect() {
   const dispatch = useDispatch();
@@ -24,6 +25,8 @@ export default function CreateConnect() {
   }) => {
     getData = { name, firstLetter, deposit, status, description };
   };
+  const showAlert = async () =>
+    Swal.fire("Success!", "You create connect!", "success");
   const handleSubmit = async () => {
     const data = {
       name: getData.name,
@@ -36,6 +39,7 @@ export default function CreateConnect() {
     dispatch(setStatus(false));
     dispatch(setType(null));
     dispatch(setValue(null));
+    await showAlert();
   };
   return (
     <UIBox mt={1}>

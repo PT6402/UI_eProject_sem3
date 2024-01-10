@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { axiosAuthentication } from "../../../../../../../../http";
 import { useEmployee } from "../../../../../../../hooks/useEmployee";
 import { useAddressStore } from "../../../../../../../hooks/useAddressStore";
+import Swal from "sweetalert2";
 
 export default function CreateEmployee() {
   const dispatch = useDispatch();
@@ -57,6 +58,8 @@ export default function CreateEmployee() {
     };
     // setData((prev) => ({...prev,address_store_id}))
   };
+  const showAlert = async () =>
+    Swal.fire("Success!", "You create employee!", "success");
   const handleSubmit = async () => {
     const data = {
       fullName: dataFormStep.value.fullName,
@@ -66,7 +69,7 @@ export default function CreateEmployee() {
       address_store_id: dataFormStep.value.address_store.value,
     };
 
-    await create({ data });
+    await create({ data }).then(() => showAlert());
     navigate("/admin/users/employees/list");
     dispatch(setValue({}));
   };
@@ -97,8 +100,7 @@ export default function CreateEmployee() {
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   const isLastStep = activeStep === steps.length - 1;
-
-  const handleNext = () => {
+  const handleNext = async () => {
     dispatch(setValue(dataStep));
     setActiveStep(activeStep + 1);
   };

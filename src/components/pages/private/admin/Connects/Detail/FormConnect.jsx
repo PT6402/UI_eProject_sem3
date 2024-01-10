@@ -67,7 +67,7 @@ export default function FormConnect({ data, handleGetData }) {
             </UIBox>
             <MDEditor value={value} input={description} edit />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <UIBox mb={3}>
               <UIBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
                 <UITypography
@@ -90,7 +90,7 @@ export default function FormConnect({ data, handleGetData }) {
                 ]}
               />
             </UIBox>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={6}>
             <FormField
               type="text"

@@ -2,7 +2,9 @@
 import { UIBox, UIButton, UITypography } from "../../../common";
 import { Card, Grid } from "@mui/material";
 import ItemService from "./ItemService";
-
+import { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { axiosAuthentication } from "../../../../../http";
 export default function ItemContract({
   contract_id,
   fullname,
@@ -10,6 +12,33 @@ export default function ItemContract({
   email,
   serviceDtos,
 }) {
+  const [orderIdSelect, setOrderIdSelect] = useState();
+  const [selectService, setSelectService] = useState(null);
+  const handleGetIdService = (id, orderId) => {
+    setSelectService(id);
+    setOrderIdSelect(orderId);
+  };
+  async function initializeStripe(pubKey) {
+    const stripe = await loadStripe(pubKey);
+    return stripe;
+  }
+  async function checkout({ pubKey, sessionId }) {
+    const stripe = await initializeStripe(pubKey);
+    stripe.redirectToCheckout({ sessionId });
+  }
+  const handlePayment = async () => {
+    localStorage.setItem("back_page", "/online-payment");
+    const url = `http://localhost:8000/api/Stripe/${orderIdSelect}`;
+    await axiosAuthentication.get(url).then(async (res) => {
+      if (res.status == 200) {
+        const sessionId = res.data.sessionId;
+        const pubKey =
+          "pk_test_51OVfTBDuw2SA7iQX2LFfEOYc6Mz6OSDsMd9llazwmTzEPt9KdQc0QFotbVqPi6P9qKiGmnNDQXbmqAPkXSOZD8VW00upFCUZ4K";
+        await checkout({ pubKey, sessionId }).then((res) => console.log(res));
+        return;
+      }
+    });
+  };
   return (
     <Card
       sx={{
@@ -105,6 +134,10 @@ export default function ItemContract({
                         packages={item.package}
                         duration={item.duration}
                         price={item.price}
+                        id={index}
+                        selectService={selectService}
+                        handleGetIdService={handleGetIdService}
+                        orderId={item.orderId}
                       />
                     </Grid>
                   );
@@ -118,7 +151,8 @@ export default function ItemContract({
                   fontSize: "1.2rem",
                 }}
                 variant={"contained"}
-                color={"error"}>
+                color={"error"}
+                onClick={handlePayment}>
                 Payment
               </UIButton>
             </UIBox>

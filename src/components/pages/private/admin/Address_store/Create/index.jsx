@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FormCreateAddressStore from "./FormAddressStore";
 import { useAddressStore } from "../../../../../../hooks/useAddressStore";
 import { createActionCreatorInvariantMiddleware } from "@reduxjs/toolkit";
+import Swal from "sweetalert2";
 
 export default function CreateAddressStore() {
   const { create, isLoading } = useAddressStore();
@@ -24,6 +25,8 @@ export default function CreateAddressStore() {
       address,
     };
   };
+  const showAlert = async () =>
+    Swal.fire("Success!", "You create address store!", "success");
   const handleSubmit = async () => {
     const dataRes2 = {
       address_full: `${data?.address}`,
@@ -34,6 +37,7 @@ export default function CreateAddressStore() {
     };
     await create({ dataRes2 });
     navigate("/admin/address-stores");
+    showAlert();
     // console.log(dataRes);
   };
   return (

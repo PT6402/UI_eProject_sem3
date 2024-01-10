@@ -10,6 +10,7 @@ import {
   setType,
   setValue,
 } from "../../../../../../context/modalSlice";
+import Swal from "sweetalert2";
 
 export default function Form_Duration() {
   const dispatch = useDispatch();
@@ -59,16 +60,24 @@ export default function Form_Duration() {
       };
     }
   };
+  const showAlert = async ({ message }) =>
+    Swal.fire("Success!", `You ${message} duration!`, "success");
   const handleSubmit = async () => {
     if (itemDuration != null) {
       await updateDuration({ data });
+      dispatch(setStatusModal());
+      dispatch(setStatus(false));
+      dispatch(setType(null));
+      dispatch(setValue(null));
+      showAlert({ message: "update" });
     } else {
       await createDuration({ data });
+      dispatch(setStatusModal());
+      dispatch(setStatus(false));
+      dispatch(setType(null));
+      dispatch(setValue(null));
+      showAlert({ message: "create" });
     }
-    dispatch(setStatusModal());
-    dispatch(setStatus(false));
-    dispatch(setType(null));
-    dispatch(setValue(null));
   };
   if (modalType.value != null) {
     if (modalType.value.package_id != null) {

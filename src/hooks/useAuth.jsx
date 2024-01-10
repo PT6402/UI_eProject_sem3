@@ -7,6 +7,7 @@ import { remove_info_user, set_info_user } from "../context/userSlice";
 import { setStatus, setType, setValue } from "../context/modalSlice";
 import Forgot_pass from "../components/pages/public/Forgot_pass";
 import SignIn from "../components/pages/public/Sign_in";
+import { useEmployee } from "./useEmployee";
 
 export function useAuth() {
   //[dispatch-navigate]
@@ -15,6 +16,7 @@ export function useAuth() {
   const navigate = useNavigate();
   //[store-user]
   const info_user = useSelector((state) => state.user.info_user);
+  const { gets } = useEmployee();
   const axiosAuth = Auth_http();
   //[status]
   const [error, setError] = useState();
@@ -38,18 +40,39 @@ export function useAuth() {
       };
       return await axiosAuthentication
         .post("http://localhost:8000/login", req)
-        .then((res) => {
-          if (res.status == 200) {
-            const info = {
-              userId: res.data.id,
-              fullName: res.data.fullName,
-              email: res.data.email,
-              phone: res.data.phone,
-              role: res.data.role,
-              isVerified: true,
-              accessToken: res.data.token,
-              tp_contract_id: null,
-            };
+        .then(async ({ status, data }) => {
+          if (status == 200) {
+            let info;
+            if (data.role.includes("Emp_")) {
+              info = await gets().then((res) => {
+                const employee_find = res.find(
+                  ({ phone }) => phone == data.phone
+                );
+                return {
+                  userId: data.id,
+                  fullName: data.fullName,
+                  email: data.email,
+                  phone: data.phone,
+                  role: data.role,
+                  isVerified: true,
+                  accessToken: data.token,
+                  tp_contract_id: data.tp_contract_id,
+                  employee_id: employee_find.id,
+                  address_store_id: employee_find.address_store_id,
+                };
+              });
+            } else {
+              info = {
+                userId: data.id,
+                fullName: data.fullName,
+                email: data.email,
+                phone: data.phone,
+                role: data.role,
+                isVerified: true,
+                accessToken: data.token,
+                tp_contract_id: data.tp_contract_id,
+              };
+            }
             dispatch(set_info_user(info));
             dispatch(setStatus(false));
             dispatch(setType(null));
@@ -167,19 +190,41 @@ export function useAuth() {
     try {
       return await axiosAuthentication
         .get(`http://localhost:8000/check-login`)
-        .then((res) => {
-          if (res.status == 200) {
-            const info = {
-              userId: res.data.id,
-              fullName: res.data.fullName,
-              email: res.data.email,
-              phone: res.data.phone,
-              role: res.data.role,
-              isVerified: true,
-              accessToken: res.data.token,
-              tp_contract_id: 1,
-            };
-            return dispatch(set_info_user(info));
+        .then(async ({ status, data }) => {
+          if (status == 200) {
+            let info;
+            if (data.role.includes("Emp_")) {
+              info = await gets().then((res) => {
+                const employee_find = res.find(
+                  ({ phone }) => phone == data.phone
+                );
+                return {
+                  userId: data.id,
+                  fullName: data.fullName,
+                  email: data.email,
+                  phone: data.phone,
+                  role: data.role,
+                  isVerified: true,
+                  accessToken: data.token,
+                  tp_contract_id: data.tp_contract_id,
+                  employee_id: employee_find.id,
+                  address_store_id: employee_find.address_store_id,
+                };
+              });
+            } else {
+              info = {
+                userId: data.id,
+                fullName: data.fullName,
+                email: data.email,
+                phone: data.phone,
+                role: data.role,
+                isVerified: true,
+                accessToken: data.token,
+                tp_contract_id: data.tp_contract_id,
+              };
+            }
+            dispatch(set_info_user(info));
+            return;
           }
         });
     } catch (error) {
@@ -190,7 +235,57 @@ export function useAuth() {
       setIsLoading(false);
     }
   };
+  const changePass = async ({ data }) => {
+    try {
+      const req = {
+        user_Id: info_user.userId,
+        current_pass: data.currentPass,
+        new_pass: data.newPass,
+        confirm_pass: data.confirmPass,
+      };
+      return await axiosAuthentication
+        .put("http://localhost:8000/api/User/change_pass", req)
+        .then((res) => {
+          if (res.status == 200) {
+            return res.data;
+          } else return res.data;
+        });
+    } catch (error) {
+      console.log(error);
+      setError(error.response.data);
+      setMessage(error);
+    }
+  };
+  const updateProfile = async ({ data }) => {
+    try {
+      const req = {
+        user_Id: info_user?.userId,
+        fullname: data.fullName,
+        email: data.email,
+      };
+      return await axiosAuthentication
+        .put("http://localhost:8000/api/User/update_profile", req)
+        .then((res) => {
+          if (res.status == 200) {
+            dispatch(
+              set_info_user({
+                ...info_user,
+                fullName: res.data.model.fullname,
+                email: res.data.model.email,
+              })
+            );
+          }
+          setMessage(res.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+      setError(error.response.data);
+    }
+  };
+
   return {
+    updateProfile,
+    changePass,
     login,
     checkAccount,
     verifyPhoneServer,

@@ -11,6 +11,7 @@ import {
   setType,
   setValue,
 } from "../../../../../../context/modalSlice";
+import Swal from "sweetalert2";
 
 export default function Detail_Product() {
   const dispatch = useDispatch();
@@ -84,6 +85,8 @@ export default function Detail_Product() {
       supplier,
     };
   };
+  const showAlert = async () =>
+    Swal.fire("Success!", "You update product!", "success");
   const handleSubmit = async () => {
     const data = {
       id: getData.id,
@@ -97,6 +100,7 @@ export default function Detail_Product() {
     dispatch(setStatus(false));
     dispatch(setType(null));
     dispatch(setValue(null));
+    showAlert();
   };
   return (
     <>

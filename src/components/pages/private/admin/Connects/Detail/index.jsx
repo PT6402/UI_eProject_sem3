@@ -10,6 +10,7 @@ import {
   setType,
   setValue,
 } from "../../../../../../context/modalSlice";
+import Swal from "sweetalert2";
 
 export default function Detail_Connect() {
   const dispatch = useDispatch();
@@ -45,12 +46,15 @@ export default function Detail_Connect() {
       description,
     };
   };
+  const showAlert = async () =>
+    Swal.fire("Success!", "You update connect!", "success");
   const handleSubmit = async () => {
     await update({ data: getData });
     dispatch(setStatusModal());
     dispatch(setStatus(false));
     dispatch(setType(null));
     dispatch(setValue(null));
+    await showAlert();
   };
   return (
     <>

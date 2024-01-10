@@ -7,8 +7,12 @@ import FrameUI from "../../../../../helpers/FrameUI";
 import Header from "./components/Header";
 import { axiosAuthentication } from "../../../../../../http";
 import { loadStripe } from "@stripe/stripe-js";
-import Stripe from "stripe";
-export default function OrderDetail({ orderDetail }) {
+import ButtonSend from "./components/Button";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+export default function OrderDetail() {
+  const modalType = useSelector((state) => state.modalType);
+  const info_user = useSelector((state) => state.user.info_user);
   function formatNgayThangNam(chuoiNgay) {
     let ngayGoc = new Date(chuoiNgay);
     let ngay = ngayGoc.getDate();
@@ -30,8 +34,9 @@ export default function OrderDetail({ orderDetail }) {
     const stripe = await initializeStripe(pubKey);
     stripe.redirectToCheckout({ sessionId });
   }
-  const handlePayment = async () => {
-    const url = `http://localhost:8000/api/Stripe/${orderDetail[0].orderId}`;
+  const handlePayment = async (orderId) => {
+    localStorage.setItem("back_page", "/account");
+    const url = `http://localhost:8000/api/Stripe/${orderId}`;
     await axiosAuthentication.get(url).then(async (res) => {
       if (res.status == 200) {
         const sessionId = res.data.sessionId;
@@ -42,54 +47,72 @@ export default function OrderDetail({ orderDetail }) {
       }
     });
   };
+  const [orderDetail, setOrderDetail] = useState(null);
+  const handleCall = async () => {
+    const url = `http://localhost:8000/api/Order/summary?userID=${info_user?.userId}`;
+    await axiosAuthentication.get(url).then((res) => {
+      if (res.status == 200) {
+        setOrderDetail(res.data);
+      } else {
+        setOrderDetail(null);
+      }
+    });
+  };
+  useEffect(() => {
+    handleCall();
+  }, [modalType.statusModal]);
   return (
     <>
       {orderDetail != null && (
         <FrameUI>
           <UIBox p={2} sx={{ width: "100%" }}>
             <Grid container spacing={3} justifyContent="center">
-              <Grid item xs={12} lg={12}>
-                <Card sx={{ padding: "2rem" }}>
-                  <UIBox pt={2} px={2}>
-                    <Header
-                      order_id={orderDetail[0].orderId}
-                      createDate={formatNgayThangNam(
-                        orderDetail[0].createdDate
-                      )}
-                      status={orderDetail[0].status}
-                      handlePayment={handlePayment}
-                    />
-                  </UIBox>
-                  <Divider />
-                  <UIBox pt={1} pb={3} px={2}>
-                    <UIBox>
-                      <Grid container spacing={3}>
-                        <Grid item xs={12} md={6} lg={5}>
-                          <UIBox>
-                            <UserInformation
-                              fullName={orderDetail[0].fullName}
-                              phone={orderDetail[0].phone}
-                              connect_type_name={orderDetail[0].connectTypeName}
-                              packages={orderDetail[0].packageName}
-                              time={orderDetail[0].durationTime}
-                              validate={orderDetail[0].validate}
-                            />
-                          </UIBox>
-                        </Grid>
-                        <Grid item xs={12} lg={3} sx={{ ml: "auto" }}>
-                          <OrderSummary
-                            packagePrice={orderDetail[0].packagePrice}
-                            deposit={orderDetail[0].deposit}
-                            coupon={orderDetail[0].coupon}
-                            tax={orderDetail[0].tax}
-                            totalPrice={orderDetail[0].totalPrice}
-                          />
-                        </Grid>
-                      </Grid>
+              {orderDetail.map((item, index) => (
+                <Grid item xs={12} lg={12} key={index}>
+                  <Card sx={{ padding: "2rem" }}>
+                    <UIBox pt={2} px={2}>
+                      <Header
+                        order_id={item.orderId}
+                        createDate={formatNgayThangNam(item.createdDate)}
+                        status={item.status}
+                        handlePayment={handlePayment}
+                      />
                     </UIBox>
-                  </UIBox>
-                </Card>
-              </Grid>
+                    <Divider />
+                    <UIBox pt={1} pb={3} px={2}>
+                      <UIBox>
+                        <Grid container spacing={3}>
+                          <Grid item xs={12} md={6} lg={5}>
+                            <UIBox>
+                              <UserInformation
+                                fullName={item.fullName}
+                                phone={item.phone}
+                                connect_type_name={item.connectTypeName}
+                                packages={item.packageName}
+                                time={item.durationTime}
+                                validate={item.validate}
+                              />
+                            </UIBox>
+                          </Grid>
+                          <Grid item xs={12} lg={3} sx={{ ml: "auto" }}>
+                            <OrderSummary
+                              packagePrice={item.packagePrice}
+                              deposit={item.deposit}
+                              coupon={item.coupon}
+                              tax={item.tax}
+                              totalPrice={item.totalPrice}
+                            />
+                            {item.status == "Finish" &&
+                              !item.statusFeedback && (
+                                <ButtonSend item={item} />
+                              )}
+                          </Grid>
+                        </Grid>
+                      </UIBox>
+                    </UIBox>
+                  </Card>
+                </Grid>
+              ))}
             </Grid>
           </UIBox>
         </FrameUI>

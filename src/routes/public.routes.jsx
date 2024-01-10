@@ -72,7 +72,7 @@ const PublicRoutes = [
   {
     name: "payment",
     key: "payment",
-    route: "/payment/:session",
+    route: "/payment/:orderId/:session",
     component: <Payment />,
   },
 ];

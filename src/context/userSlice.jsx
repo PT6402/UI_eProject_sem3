@@ -8,6 +8,9 @@ const initUser = {
   role: null,
   isVerified: false,
   accessToken: null,
+  tp_contract_id: null,
+  address_store_id: null,
+  employee_id: null,
 };
 const userSlice = createSlice({
   name: "user",
@@ -21,6 +24,8 @@ const userSlice = createSlice({
       isVerified: false,
       accessToken: null,
       tp_contract_id: null,
+      address_store_id: null,
+      employee_id: null,
     },
   },
   reducers: {

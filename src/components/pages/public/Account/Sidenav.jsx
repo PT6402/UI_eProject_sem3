@@ -4,15 +4,13 @@ import { UIBox, UITypography } from "../../../common";
 import SpaceShip from "../../../models/private/Icons/SpaceShip";
 import Profile from "./Profile";
 import { useEffect, useState } from "react";
-import TpContract from "./TpContract";
-import Services from "./Services";
 import { useSelector } from "react-redux";
 import OrderDetail from "./OrderDetail";
 import { axiosAuthentication } from "../../../../../http";
-import { NULL } from "sass";
 
 export default function Sidenav({ handleGetComponent }) {
   const info_user = useSelector((state) => state.user.info_user);
+  const modalType = useSelector((state) => state.modalType);
   const [isCurrent, setIsCurrent] = useState(1);
   const [orderDetail, setOrderDetail] = useState(null);
   const sidenavItems = [
@@ -22,7 +20,7 @@ export default function Sidenav({ handleGetComponent }) {
     const url = `http://localhost:8000/api/Order/summary?userID=${info_user?.userId}`;
     await axiosAuthentication.get(url).then((res) => {
       if (res.status == 200) {
-        setOrderDetail(res.data.model);
+        setOrderDetail(res.data);
       } else {
         setOrderDetail(null);
       }
@@ -30,10 +28,10 @@ export default function Sidenav({ handleGetComponent }) {
   };
   useEffect(() => {
     handleCall();
-  }, []);
+  }, [modalType.statusModal]);
   console.log(orderDetail);
   const handleCheckService = () => {
-    if (orderDetail != null) {
+    if (orderDetail != null && orderDetail.length > 0) {
       sidenavItems.push({
         id: 3,
         icon: <SpaceShip />,
