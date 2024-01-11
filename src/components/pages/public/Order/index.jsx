@@ -181,14 +181,64 @@ export default function CreateOrder() {
       const listAddressCompare = addressStores
         .filter(({ region_id }) => region_id == region.id)
         .map((item) => ({ address: item.address_full, id: item.id }));
-
+      console.log("check before compare", listAddressCompare);
       return await CompareAddress(addressUser, listAddressCompare).then((res) =>
         setAddressFind(res)
       );
     }
   };
+
+  useEffect(() => {
+    console.log("check top");
+    if (addressFind != null) {
+      console.log("check first");
+      const phoneCodeUser = dataFormStep.value.phone_code;
+      const region = convertCodeToRegion(phoneCodeUser);
+      const listAddressCompare = addressStores
+        .filter(({ region_id }) => region_id == region.id)
+        .map((item) => ({
+          address: item.address_full,
+          id: item.id,
+          origin_address: { ...item },
+        }));
+      const arrChenk = [];
+
+      addressFind.data.map((x) => arrChenk.push(x.distance.value));
+      console.log(arrChenk, addressFind, listAddressCompare);
+      if (arrChenk.length != 1) {
+        console.log("result:!=1");
+        const valueShortest = Math.min(...arrChenk);
+        const addressShortest = arrChenk.findIndex(
+          (value) => value == valueShortest
+        );
+        setAddressShort(
+          // listAddressCompare.find(({ id }) => id == addressShortest)
+          listAddressCompare[addressShortest]
+        );
+        dispatch(
+          setValue({
+            ...dataFormStep.value,
+            addressShort: listAddressCompare[addressShortest],
+          })
+        );
+        console.log(listAddressCompare[addressShortest], addressShortest);
+        return;
+      } else {
+        console.log("result:==1");
+        // addressFind.listOrigin[1].id;
+        const addSort = listAddressCompare.find(
+          ({ id }) => id == addressFind.listOrigin[1].id
+        );
+        console.log("==1", addSort, listAddressCompare, addressFind);
+        dispatch(setValue({ ...dataFormStep.value, addressShort: addSort }));
+        setAddressShort(addSort);
+        return;
+      }
+    }
+  }, [addressFind]);
   const handleGetNameAddressStore = async () => {
     if (addressShort != null) {
+      console.log("test get name ");
       const data = {
         province_code: addressShort.origin_address.province_code,
         district_code: addressShort.origin_address.district_code,
@@ -202,41 +252,7 @@ export default function CreateOrder() {
   useEffect(() => {
     handleGetNameAddressStore();
   }, [addressShort, addressFind]);
-  useEffect(() => {
-    if (addressFind != null) {
-      const phoneCodeUser = dataFormStep.value.phone_code;
-      const region = convertCodeToRegion(phoneCodeUser);
-      const listAddressCompare = addressStores
-        .filter(({ region_id }) => region_id == region.id)
-        .map((item) => ({
-          address: item.address_full,
-          id: item.id,
-          origin_address: { ...item },
-        }));
-      const arrChenk = [];
-
-      addressFind.data.map((x) => arrChenk.push(x.distance.value));
-
-      if (arrChenk.length != 1) {
-        const valueShortest = Math.min(...arrChenk);
-        const addressShortest = arrChenk.findIndex(
-          (value) => value == valueShortest
-        );
-        setAddressShort(
-          listAddressCompare.find(({ id }) => id == addressShortest)
-        );
-      } else {
-        addressFind.listOrigin[0].id;
-        const addSort = listAddressCompare.find(
-          ({ id }) => id == addressFind.listOrigin[0].id
-        );
-
-        dispatch(setValue({ ...dataFormStep.value, addressShort: addSort }));
-        setAddressShort(addSort);
-      }
-    }
-  }, [addressFind]);
-
+  console.log(addressShort);
   return (
     <>
       <section className={styles.section} style={{ zIndex: "-1 !important" }}>

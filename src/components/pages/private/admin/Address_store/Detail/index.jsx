@@ -18,10 +18,10 @@ export default function DetailAddressStore() {
     address,
   }) => {
     data = {
-      phone_code,
-      province_code,
-      district_code,
-      ward_code,
+      phone_code: `${phone_code}`,
+      province_code: `${province_code}`,
+      district_code: `${district_code}`,
+      ward_code: `${ward_code}`,
       address_full: address,
       id: id,
     };

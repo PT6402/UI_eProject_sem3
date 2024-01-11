@@ -42,7 +42,11 @@ export default function InfoService({ getInfoServices }) {
     if (numb_Connect != undefined) {
       if (coupon != null) {
         setTotalPrice(
-          pricePack + (deposit - deposit * (coupon.percent_discount / 100))
+          pricePack +
+            (deposit - deposit * (coupon.percent_discount / 100)) +
+            (pricePack +
+              (deposit - deposit * (coupon.percent_discount / 100))) *
+              0.1224
         );
         setCouponCheck(coupon);
       } else {
@@ -66,6 +70,7 @@ export default function InfoService({ getInfoServices }) {
   useEffect(() => {
     handelGetData();
   }, [numbConnect]);
+  // console.log(couponCheck);
   // console.log(defaultTotal);
   return (
     <>
@@ -192,6 +197,7 @@ export default function InfoService({ getInfoServices }) {
                       title="Total price"
                       tax={12.24}
                       totalDeposit={deposit}
+                      totalCoupon={couponCheck?.percent_discount}
                       totalDura={pricePack}
                       total={`${totalPrice}$`}
                     />

@@ -16,6 +16,7 @@ export default function Confirm({ setActiveStep }) {
       setShow(true);
     }
   }, [value]);
+  console.log("test confirm", value?.addressShort?.id);
   return (
     <Card id="delete-account">
       <UIBox pb={2} px={2}>

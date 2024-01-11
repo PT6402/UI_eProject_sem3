@@ -174,7 +174,7 @@ export default function ItemServices({
                             <UIBadgeDot
                               color={"error"}
                               size="lg"
-                              badgeContent={`Tax:${rest.tax}%`}
+                              badgeContent={`Deposit: ${rest.totalDeposit}$`}
                               font={{
                                 color: "text",
                                 weight: "medium",
@@ -185,7 +185,20 @@ export default function ItemServices({
                             <UIBadgeDot
                               color={"error"}
                               size="lg"
-                              badgeContent={`Tax:${rest.tax}%`}
+                              badgeContent={`Package: ${rest.totalDura}$`}
+                              font={{
+                                color: "text",
+                                weight: "medium",
+                              }}
+                              fontSizeCus={"1.2rem"}
+                              px={0}
+                            />
+                            <UIBadgeDot
+                              color={"error"}
+                              size="lg"
+                              badgeContent={`Coupon: -${
+                                (rest.totalDeposit * rest.totalCoupon) / 100
+                              }$`}
                               font={{
                                 color: "text",
                                 weight: "medium",
