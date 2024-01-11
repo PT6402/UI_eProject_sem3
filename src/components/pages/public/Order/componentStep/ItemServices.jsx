@@ -198,6 +198,8 @@ export default function ItemServices({
                               size="lg"
                               badgeContent={`Coupon: -${
                                 (rest.totalDeposit * rest.totalCoupon) / 100
+                                  ? (rest.totalDeposit * rest.totalCoupon) / 100
+                                  : 0
                               }$`}
                               font={{
                                 color: "text",

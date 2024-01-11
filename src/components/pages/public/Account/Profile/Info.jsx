@@ -33,13 +33,18 @@ export default function Info() {
       })
       .then(async (result) => {
         if (result.isConfirmed) {
-          const data = {
-            user_Id: info_user?.userId,
-            fullName: fullName,
-            email: email,
-          };
-          await updateProfile({ data });
-          Swal.fire("Success!", "Your profile has been updated.", "success");
+          if (fullName !== "") {
+            const data = {
+              user_Id: info_user?.userId,
+              fullName: fullName,
+              email: email,
+            };
+            await updateProfile({ data });
+            Swal.fire("Success!", "Your profile has been updated.", "success");
+          } else {
+            Swal.fire("Error!", "fullname empty", "error");
+            setFullName(info_user?.fullName);
+          }
         } else {
           setFullName(info_user?.fullName);
           setEmail(info_user?.email);

@@ -68,7 +68,7 @@ export default function OnlinePayment() {
                     }}>
                     <UIBox p={3}>
                       <label className={styles.label}>
-                        <span>Phone/Account:</span>
+                        <span>Phone</span>
                         <input
                           className={styles.input}
                           type="text"

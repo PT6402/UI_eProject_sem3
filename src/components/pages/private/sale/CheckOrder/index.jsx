@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { UIBox } from "../../../../common";
+import { UIBox, UIButton } from "../../../../common";
 import { DataTable } from "../../../../models";
 import { columns } from "./data";
 import { axiosAuthentication } from "../../../../../../http";
 import { useDispatch, useSelector } from "react-redux";
 import { setValue } from "../../../../../context/employeeSlice";
 export default function CheckOrder() {
+  const info_user = useSelector((state) => state.user.info_user);
   const [orderList, setOrderList] = useState(null);
   const employeeSlice = useSelector((state) => state.employeeSlice);
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export default function CheckOrder() {
     return ngayMoiFormat;
   }
   const handleCallList = async () => {
-    const url = `http://localhost:8000/api/Staff?storeID=${3}&empID=${9}`;
+    const url = `http://localhost:8000/api/Staff?storeID=${info_user.address_store_id}&empID=${info_user.employee_id}`;
     await axiosAuthentication.get(url).then((res) => {
       if (res.status == 200) {
         const reqdata = res.data.model;
@@ -36,9 +37,10 @@ export default function CheckOrder() {
       }
     });
   };
+  const [reload, setReload] = useState(false);
   useEffect(() => {
     handleCallList();
-  }, [employeeSlice.statusOrder]);
+  }, [employeeSlice.statusOrder, reload]);
   console.log(employeeSlice);
   return (
     <>
@@ -50,7 +52,13 @@ export default function CheckOrder() {
             alignItems="flex-start"
             mb={2}>
             <UIBox display="flex">
-              <UIBox ml={1}></UIBox>
+              <UIBox ml={1}>
+                <UIButton
+                  color={"info"}
+                  onClick={() => setReload((prev) => !prev)}>
+                  Reload
+                </UIButton>
+              </UIBox>
             </UIBox>
           </UIBox>
           <UIBox mb={3}>

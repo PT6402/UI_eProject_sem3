@@ -12,7 +12,7 @@ export default function CheckAccountPhone(acc_phoneInput) {
   if (acc_phoneInput.current.value != null) {
     const valueAccountPhone = acc_phoneInput.current.value.trim();
     if (valueAccountPhone == "") {
-      error = "account/phone is empty";
+      error = "phone/contractID is empty";
     } else if (
       valueAccountPhone.length == 16 &&
       listFirstLetter.includes(valueAccountPhone.charAt(0))
@@ -32,7 +32,7 @@ export default function CheckAccountPhone(acc_phoneInput) {
           value: ConvertToInternationalPhoneNumber(valueAccountPhone),
         };
       } else {
-        error = "invalid account/phone";
+        error = "invalid phone/contractID";
       }
     }
   }

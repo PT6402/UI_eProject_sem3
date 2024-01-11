@@ -36,19 +36,26 @@ export default function ChangePassword() {
       })
       .then(async (result) => {
         if (result.isConfirmed) {
-          const data = {
-            info_user: info_user.userId,
-            currentPass: currentPass,
-            newPass: newPass,
-            confirmPass: confirmPass,
-          };
-          await changePass({ data }).then(() => {
-            setConfirmPass("");
-            setCurrentPass("");
+          if (currentPass != "" || newPass != "" || confirmPass != "") {
+            const data = {
+              info_user: info_user.userId,
+              currentPass: currentPass,
+              newPass: newPass,
+              confirmPass: confirmPass,
+            };
+            await changePass({ data }).then(() => {
+              setConfirmPass("");
+              setCurrentPass("");
+              setNewPass("");
+              return;
+            });
+            setNotify(true);
+          } else {
+            Swal.fire("Error!", "empty field", "error");
             setNewPass("");
-            return;
-          });
-          setNotify(true);
+            setCurrentPass("");
+            setConfirmPass("");
+          }
         } else {
           setNewPass("");
           setCurrentPass("");

@@ -89,6 +89,11 @@ function Header({ order_id, createDate, status, handlePayment }) {
           {status}
         </UIButton>
       )}
+      {status == "Techn Confirmed" && (
+        <UIButton variant="outlined" color="error" sx={{ fontSize: "1.3rem" }}>
+          {status}
+        </UIButton>
+      )}
       {status == "StopOrder" && (
         <>
           <UIBox sx={{ display: "flex", flexDirection: "column" }}>

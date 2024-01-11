@@ -191,7 +191,7 @@ export default function SignIn() {
               )}
               <h2 className={styles.title}>Login</h2>
               <label className={styles.label}>
-                <span>Phone / Account :</span>
+                <span>Phone / Contract ID :</span>
                 <input
                   className={styles.input}
                   type="text"

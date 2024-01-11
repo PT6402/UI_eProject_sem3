@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UIBox } from "../../../../common";
+import { UIBox, UIButton } from "../../../../common";
 import { DataTable } from "../../../../models";
 import { columns } from "./data";
 import { axiosAuthentication } from "../../../../../../http";
@@ -40,9 +40,15 @@ export default function CheckOrder() {
       }
     });
   };
+  const [reload, setReload] = useState(false);
   useEffect(() => {
     handleCallList();
-  }, [employeeSlice.statusOrder, modalType.value, modalType.statusModal]);
+  }, [
+    employeeSlice.statusOrder,
+    modalType.value,
+    modalType.statusModal,
+    reload,
+  ]);
   return (
     <>
       {orderList != null && (
@@ -53,7 +59,13 @@ export default function CheckOrder() {
             alignItems="flex-start"
             mb={2}>
             <UIBox display="flex">
-              <UIBox ml={1}></UIBox>
+              <UIBox ml={1}>
+                <UIButton
+                  color={"info"}
+                  onClick={() => setReload((prev) => !prev)}>
+                  Reload
+                </UIButton>
+              </UIBox>
             </UIBox>
           </UIBox>
           <UIBox mb={3}>

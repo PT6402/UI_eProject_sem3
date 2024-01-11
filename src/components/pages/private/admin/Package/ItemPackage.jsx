@@ -130,12 +130,15 @@ export default function ItemPackage({
               </UIButton>
             </UIBox>
             <UIBox ml={{ xs: 0, sm: 1 }} mt={{ xs: 1, sm: 0 }}>
-              <UIButton
-                color="error"
-                sx={{ height: "100%" }}
-                onClick={() => handleDelete({ id: idValue })}>
-                Delete
-              </UIButton>
+              {!packages.find(({ package_id }) => package_id == idValue)
+                .durations.length > 0 && (
+                <UIButton
+                  color="error"
+                  sx={{ height: "100%" }}
+                  onClick={() => handleDelete({ id: idValue })}>
+                  Delete
+                </UIButton>
+              )}
             </UIBox>
           </UIBox>
         </UIBox>
